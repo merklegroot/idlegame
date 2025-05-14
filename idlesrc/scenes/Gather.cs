@@ -1,6 +1,8 @@
 using Godot;
 using System;
 
+namespace IdleGame;
+
 public partial class Gather : HBoxContainer
 {
 	private static readonly Texture2D WoodIcon = GD.Load<Texture2D>("res://assets/rpg-icons/Material/Wood Log.png");
@@ -17,7 +19,6 @@ public partial class Gather : HBoxContainer
 	private bool _gathering = false;
 	private float _gatherSpeed = 0.5f;  // Time in seconds to complete gathering
 	private float _progress = 0.0f;
-	private int _count = 0;
 	
 	public override void _Ready()
 	{
@@ -29,6 +30,9 @@ public partial class Gather : HBoxContainer
 		
 		// Connect button press signal
 		_gatherArea.Pressed += OnGatherAreaPressed;
+		
+		// Connect to inventory changes
+		GameState.Instance.InventoryChanged += UpdateResourceCountDisplay;
 		
 		// Initialize UI
 		_progressBar.Value = _progress;
@@ -70,13 +74,18 @@ public partial class Gather : HBoxContainer
 		_gathering = false;
 		_progress = 0.0f;
 		_progressBar.Value = _progress;
-		_count++;
-		UpdateResourceCountDisplay();
+		GameState.Instance.AddResource(ResourceName);
 		GD.Print($"{ResourceName} gathered!");
 	}
 	
 	private void UpdateResourceCountDisplay()
 	{
-		_countLabel.Text = $"{ResourceName}: {_count}";
+		var count = ResourceName.ToLower() switch
+		{
+			"wood" => GameState.Instance.WoodCount,
+			"rock" => GameState.Instance.RockCount,
+			_ => 0
+		};
+		_countLabel.Text = $"{ResourceName}: {count}";
 	}
 } 

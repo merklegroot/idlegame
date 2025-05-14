@@ -25,4 +25,24 @@
   - Monster Part
   - Ore & Gem
   - Potion
-  - Weapon & Tool 
+  - Weapon & Tool
+
+## Cute Fantasy Asset Pack
+- **Asset Pack Name**: Cute Fantasy (Free Version)
+- **Source**: [itch.io - Cute Fantasy](https://grafxkid.itch.io/cute-fantasy)
+- **License**: Custom License (Free Version)
+
+### License Terms
+✔️ Permitted:
+- Use in non-commercial projects
+- Modify the assets
+
+❌ Not Permitted:
+- Redistribution or resale, even if modified
+
+### Asset Contents
+- Player sprites
+- Enemy sprites
+- Animal sprites
+- Outdoor decoration
+- Tiles 

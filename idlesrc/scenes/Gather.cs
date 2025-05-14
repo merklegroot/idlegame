@@ -5,9 +5,6 @@ namespace IdleGame;
 
 public partial class Gather : HBoxContainer
 {
-	private static readonly Texture2D WoodIcon = GD.Load<Texture2D>("res://assets/rpg-icons/Material/Wood Log.png");
-	private static readonly Texture2D RockIcon = GD.Load<Texture2D>("res://assets/cute-fantasy/individual_tiles/outdoor_decor/ground_rocks.png");
-	
 	[Export]
 	public string ResourceName { get; set; } = "Resource";
 	
@@ -20,6 +17,8 @@ public partial class Gather : HBoxContainer
 	private float _gatherSpeed = 0.5f;  // Time in seconds to complete gathering
 	private float _progress = 0.0f;
 	
+	private ResourceInfo _resourceInfo;
+	
 	public override void _Ready()
 	{
 		// Get references to UI elements
@@ -27,6 +26,14 @@ public partial class Gather : HBoxContainer
 		_icon = GetNode<TextureRect>("GatherArea/HBoxContainer/Icon");
 		_gatherArea = GetNode<Button>("GatherArea");
 		_countLabel = GetNode<Label>("Count");
+		
+		// Get resource info
+		_resourceInfo = ResourceData.Instance.GetResourceInfo(ResourceName);
+		if (_resourceInfo == null)
+		{
+			GD.PrintErr($"Failed to load resource info for {ResourceName}");
+			return;
+		}
 		
 		// Connect button press signal
 		_gatherArea.Pressed += OnGatherAreaPressed;
@@ -36,13 +43,11 @@ public partial class Gather : HBoxContainer
 		
 		// Initialize UI
 		_progressBar.Value = _progress;
-		_icon.Texture = ResourceName.ToLower() switch
-		{
-			"wood" => WoodIcon,
-			"rock" => RockIcon,
-			_ => null
-		};
+		_icon.Texture = GD.Load<Texture2D>(_resourceInfo.Icon);
 		UpdateResourceCountDisplay();
+		
+		// Set tooltip
+		_gatherArea.TooltipText = _resourceInfo.Description;
 	}
 
 	public override void _Process(double delta)
@@ -75,7 +80,7 @@ public partial class Gather : HBoxContainer
 		_progress = 0.0f;
 		_progressBar.Value = _progress;
 		GameState.Instance.AddResource(ResourceName);
-		GD.Print($"{ResourceName} gathered!");
+		GD.Print($"{_resourceInfo.Name} gathered!");
 	}
 	
 	private void UpdateResourceCountDisplay()
@@ -86,6 +91,6 @@ public partial class Gather : HBoxContainer
 			"rock" => GameState.Instance.RockCount,
 			_ => 0
 		};
-		_countLabel.Text = $"{ResourceName}: {count}";
+		_countLabel.Text = $"{_resourceInfo.Name}: {count}";
 	}
 } 

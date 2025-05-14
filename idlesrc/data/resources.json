@@ -1,0 +1,12 @@
+{
+    "wood": {
+        "name": "Wood",
+        "icon": "res://assets/rpg-icons/Material/Wood Log.png",
+        "description": "Basic wood resource gathered from trees"
+    },
+    "rock": {
+        "name": "Rock",
+        "icon": "res://assets/cute-fantasy/individual_tiles/outdoor_decor/ground_rocks.png",
+        "description": "Basic rock resource gathered from the ground"
+    }
+} 

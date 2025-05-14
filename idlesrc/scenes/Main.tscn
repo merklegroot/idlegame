@@ -25,6 +25,13 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 20
 
+[node name="Title" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "Resource Gathering"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="WoodGather" parent="VBoxContainer" instance=ExtResource("1_gather")]
 layout_mode = 2
 ResourceName = "Wood"

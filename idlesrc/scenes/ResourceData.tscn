@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3]
 
-[ext_resource type="Script" path="res://scripts/ResourceData.cs" id="1_data"]
+[ext_resource type="Script" path="res://scenes/ResourceData.cs" id="1_data"]
 
 [node name="ResourceData" type="Node"]
 script = ExtResource("1_data") 

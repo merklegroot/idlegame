@@ -17,8 +17,8 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-GameState="*res://scripts/GameState.tscn"
-ResourceData="*res://scripts/ResourceData.tscn"
+GameState="*res://scenes/GameState.tscn"
+ResourceData="*res://scenes/ResourceData.tscn"
 
 [display]
 

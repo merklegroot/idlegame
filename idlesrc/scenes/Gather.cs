@@ -88,7 +88,7 @@ public partial class Gather : HBoxContainer
 		var count = ResourceName.ToLower() switch
 		{
 			"wood" => GameState.Instance.WoodCount,
-			"rock" => GameState.Instance.RockCount,
+			"stone" => GameState.Instance.StoneCount,
 			_ => 0
 		};
 		_countLabel.Text = $"{_resourceInfo.Name}: {count}";

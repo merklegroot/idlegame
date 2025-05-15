@@ -6,12 +6,12 @@ namespace IdleGame;
 public partial class Inventory : Control
 {
 	private Label _woodCount;
-	private Label _rockCount;
+	private Label _stoneCount;
 	
 	public override void _Ready()
 	{
 		_woodCount = GetNode<Label>("VBoxContainer/Resources/WoodCount");
-		_rockCount = GetNode<Label>("VBoxContainer/Resources/RockCount");
+		_stoneCount = GetNode<Label>("VBoxContainer/Resources/StoneCount");
 		
 		// Connect to inventory changes
 		GameState.Instance.InventoryChanged += UpdateDisplay;
@@ -22,6 +22,6 @@ public partial class Inventory : Control
 	private void UpdateDisplay()
 	{
 		_woodCount.Text = $"Wood: {GameState.Instance.WoodCount}";
-		_rockCount.Text = $"Rock: {GameState.Instance.RockCount}";
+		_stoneCount.Text = $"Stone: {GameState.Instance.StoneCount}";
 	}
 } 

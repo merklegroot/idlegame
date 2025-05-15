@@ -50,9 +50,9 @@ vertical_alignment = 1
 layout_mode = 2
 ResourceName = "Wood"
 
-[node name="RockGather" parent="TabContainer/Gathering/VBoxContainer" instance=ExtResource("1_gather")]
+[node name="StoneGather" parent="TabContainer/Gathering/VBoxContainer" instance=ExtResource("1_gather")]
 layout_mode = 2
-ResourceName = "Rock"
+ResourceName = "Stone"
 
 [node name="Inventory" parent="TabContainer" instance=ExtResource("2_inventory")]
 layout_mode = 2

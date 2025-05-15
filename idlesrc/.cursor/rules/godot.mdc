@@ -1,0 +1,13 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Scene scripts should be in the same folder as their scenes
+rule "scene-scripts-location" {
+    matches = "**/*.tscn"
+    script_path = extract("script = ExtResource\\(\"(.+?)\"\\)")
+    scene_dir = dirname(file)
+    script_dir = dirname(script_path)
+    assert script_dir == scene_dir : "Scene scripts should be in the same folder as their scenes"
+} 

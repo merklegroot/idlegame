@@ -1,8 +1,6 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=2 format=3 uid="uid://bdn24ywetpqdm"]
 
 [ext_resource type="Script" path="res://scenes/Gather.cs" id="1_gather"]
-[ext_resource type="Texture2D" path="res://assets/rpg-icons/Material/Wood Log.png" id="2_wood"]
-[ext_resource type="Texture2D" path="res://assets/cute-fantasy/individual_tiles/outdoor_decor/ground_rocks.png" id="3_rocks"]
 
 [node name="Gather" type="HBoxContainer"]
 theme_override_constants/separation = 10
@@ -40,4 +38,4 @@ show_percentage = false
 [node name="Count" type="Label" parent="."]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
-vertical_alignment = 1 
+vertical_alignment = 1

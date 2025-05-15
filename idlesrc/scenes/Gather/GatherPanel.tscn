@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3]
 
-[ext_resource type="PackedScene" path="res://scenes/GatherLine.tscn" id="1_gather"]
+[ext_resource type="PackedScene" path="res://scenes/Gather/GatherLine.tscn" id="1_gather"]
 
 [node name="Gathering" type="Control"]
 layout_mode = 2

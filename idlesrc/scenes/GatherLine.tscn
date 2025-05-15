@@ -1,8 +1,8 @@
 [gd_scene load_steps=2 format=3 uid="uid://bdn24ywetpqdm"]
 
-[ext_resource type="Script" path="res://scenes/Gather.cs" id="1_gather"]
+[ext_resource type="Script" path="res://scenes/GatherLine.cs" id="1_gather"]
 
-[node name="Gather" type="HBoxContainer"]
+[node name="GatherLine" type="HBoxContainer"]
 theme_override_constants/separation = 10
 script = ExtResource("1_gather")
 

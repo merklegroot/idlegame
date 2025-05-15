@@ -3,7 +3,7 @@ using System;
 
 namespace IdleGame;
 
-public partial class Gather : HBoxContainer
+public partial class GatherLine : HBoxContainer
 {
 	[Export]
 	public string ResourceName { get; set; } = "Resource";

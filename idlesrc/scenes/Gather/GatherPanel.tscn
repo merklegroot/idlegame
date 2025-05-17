@@ -27,12 +27,4 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 48
 text = "Resource Gathering"
 horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="WoodGather" parent="VBoxContainer" instance=ExtResource("1_gather")]
-layout_mode = 2
-ResourceName = "Wood"
-
-[node name="StoneGather" parent="VBoxContainer" instance=ExtResource("1_gather")]
-layout_mode = 2
-ResourceName = "Stone" 
+vertical_alignment = 1 

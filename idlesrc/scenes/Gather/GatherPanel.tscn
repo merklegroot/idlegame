@@ -1,9 +1,11 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=3 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/Gather/GatherLine.tscn" id="1_gather"]
+[ext_resource type="Script" path="res://scenes/Gather/GatherPanel.cs" id="1_script"]
 
 [node name="Gathering" type="Control"]
 layout_mode = 2
+script = ExtResource("1_script")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1

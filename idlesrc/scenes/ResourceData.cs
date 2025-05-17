@@ -9,7 +9,7 @@ public partial class ResourceData : Node
 {
 	public static ResourceData Instance { get; private set; }
 
-	private Dictionary<string, ResourceInfo> _resources = new();
+	private List<ResourceInfo> _resources = new();
 
 	public override void _EnterTree()
 	{
@@ -22,6 +22,11 @@ public partial class ResourceData : Node
 		Instance = this;
 
 		LoadResources();
+	}
+
+	public List<ResourceInfo> ListResources()
+	{
+		return _resources;
 	}
 
 	private static string ReadText<TData>(string path)
@@ -49,17 +54,11 @@ public partial class ResourceData : Node
 
 	private void LoadResources()
 	{
-		_resources = ReadJson<Dictionary<string, ResourceInfo>>("res://data/resources.json");
+		_resources = ReadJson<List<ResourceInfo>>("res://data/resources.json");
 	}
 
-	public ResourceInfo GetResourceInfo(string resourceId)
+	public ResourceInfo GetResourceById(string resourceId)
 	{
-		if (_resources.TryGetValue(resourceId.ToLower(), out var info))
-		{
-			return info;
-		}
-
-		GD.PrintErr($"Resource not found: {resourceId}");
-		return null;
+		return _resources.Find(r => r.Id == resourceId);
 	}
 }

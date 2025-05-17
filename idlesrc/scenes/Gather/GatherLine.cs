@@ -6,7 +6,7 @@ namespace IdleGame;
 public partial class GatherLine : HBoxContainer
 {
 	[Export]
-	public string ResourceName { get; set; } = "Resource";
+	public string ResourceId { get; set; } = null;
 	
 	private ProgressBar _progressBar;
 	private TextureRect _icon;
@@ -28,10 +28,10 @@ public partial class GatherLine : HBoxContainer
 		_countLabel = GetNode<Label>("Count");
 		
 		// Get resource info
-		_resourceInfo = ResourceData.Instance.GetResourceInfo(ResourceName);
+		_resourceInfo = ResourceData.Instance.GetResourceById(ResourceId);
 		if (_resourceInfo == null)
 		{
-			GD.PrintErr($"Failed to load resource info for {ResourceName}");
+			GD.PrintErr($"Failed to load resource info for {ResourceId}");
 			return;
 		}
 		
@@ -79,18 +79,14 @@ public partial class GatherLine : HBoxContainer
 		_gathering = false;
 		_progress = 0.0f;
 		_progressBar.Value = _progress;
-		GameState.Instance.AddResource(ResourceName);
+		GameState.Instance.AddResource(ResourceId);
 		GD.Print($"{_resourceInfo.Name} gathered!");
 	}
 	
 	private void UpdateResourceCountDisplay()
 	{
-		var count = ResourceName.ToLower() switch
-		{
-			"wood" => GameState.Instance.WoodCount,
-			"stone" => GameState.Instance.StoneCount,
-			_ => 0
-		};
-		_countLabel.Text = $"{_resourceInfo.Name}: {count}";
+		var count = GameState.Instance.GetResouceQuantity(ResourceId);
+		
+		_countLabel.Text = $"{_resourceInfo?.Name} ({ResourceId}): {count}";
 	}
 } 

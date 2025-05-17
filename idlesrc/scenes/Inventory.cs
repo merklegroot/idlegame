@@ -20,7 +20,7 @@ public partial class Inventory : Control
 	
 	private void UpdateDisplay()
 	{
-		_woodCount.Text = $"Wood: {GameState.Instance.WoodCount}";
-		_stoneCount.Text = $"Stone: {GameState.Instance.StoneCount}";
+		_woodCount.Text = $"Wood: {GameState.Instance.GetResouceQuantity("wood")}";
+		_stoneCount.Text = $"Stone: {GameState.Instance.GetResouceQuantity("stone")}";
 	}
 } 

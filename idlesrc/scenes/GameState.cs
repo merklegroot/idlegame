@@ -1,5 +1,4 @@
 using Godot;
-using System;
 using System.Collections.Generic;
 
 namespace IdleGame;
@@ -11,12 +10,32 @@ public partial class GameState : Node
 	[Signal]
 	public delegate void InventoryChangedEventHandler();
 	
-	private int _woodCount = 0;
-	private int _stoneCount = 0;
+
+	private Dictionary<string, int> _resourceQuantities = new();
+
+	public int GetResouceQuantity(string resourceId)
+	{
+		if(!_resourceQuantities.TryGetValue(resourceId, out int quantity))
+		{
+			return 0;
+		}
+
+		return quantity;
+	}
+
+	public void AddResource(string resourceId, int quantity = 1)
+	{
+		if(!_resourceQuantities.TryGetValue(resourceId, out int currentQuantity))
+		{
+			currentQuantity = 0;
+		}
+
+		_resourceQuantities[resourceId] = currentQuantity + quantity;
+		EmitSignal(SignalName.InventoryChanged);
+	}
+
 	private decimal _money = 0;
 	
-	public int WoodCount => _woodCount;
-	public int StoneCount => _stoneCount;
 	public decimal Money => _money;
 	
 	private static readonly Dictionary<string, decimal> SellPrices = new()
@@ -35,33 +54,17 @@ public partial class GameState : Node
 		Instance = this;
 	}
 	
-	public void AddResource(string resourceName, int amount = 1)
-	{
-		switch (resourceName.ToLower())
-		{
-			case "wood":
-				_woodCount += amount;
-				break;
-			case "stone":
-				_stoneCount += amount;
-				break;
-		}
-		EmitSignal(SignalName.InventoryChanged);
-	}
+	private Dictionary<string, int> _resources = new();
 	
 	public bool SellResource(string resourceName, int amount = 1)
 	{
 		bool success = false;
-		switch (resourceName.ToLower())
+		var quantity = GetResouceQuantity(resourceName);
+		
+		if (quantity >= amount)
 		{
-			case "wood" when _woodCount >= amount:
-				_woodCount -= amount;
-				success = true;
-				break;
-			case "stone" when _stoneCount >= amount:
-				_stoneCount -= amount;
-				success = true;
-				break;
+			AddResource(resourceName, -amount);
+			success = true;
 		}
 		
 		if (success && SellPrices.TryGetValue(resourceName.ToLower(), out decimal price))

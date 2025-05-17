@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/Gather/GatherPanel.tscn" id="1_gathering"]
-[ext_resource type="PackedScene" path="res://scenes/Inventory.tscn" id="2_inventory"]
+[ext_resource type="PackedScene" path="res://scenes/Inventory/Inventory.tscn" id="2_inventory"]
 
 [node name="Main" type="Control"]
 layout_mode = 3

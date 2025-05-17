@@ -15,4 +15,7 @@ public class ResourceInfo
 	
 	[JsonPropertyName("description")]
 	public string Description { get; set; }
+
+	[JsonPropertyName("isGatherable")]
+	public bool IsGatherable { get; set; }
 } 

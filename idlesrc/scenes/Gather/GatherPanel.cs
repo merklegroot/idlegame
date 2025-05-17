@@ -1,7 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Linq;
 
 namespace IdleGame;
 
@@ -23,8 +23,8 @@ public partial class GatherPanel : Control
         }
         _gatherLines.Clear();
 
-        // Add gather lines for each resource
-        foreach (var resource in ResourceData.Instance.ListResources())
+        // Add gather lines for each gatherable resource
+        foreach (var resource in ResourceData.Instance.ListResources().Where(r => r.IsGatherable))
         {
             var gatherLine = gatherLineScene.Instantiate<GatherLine>();
             gatherLine.ResourceId = resource.Id;

@@ -1,4 +1,4 @@
-# GodotNetGame
+# Some Idle Game
 
 A Godot 4.2 project with C#/.NET support.
 

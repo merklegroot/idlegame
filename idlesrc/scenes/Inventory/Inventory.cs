@@ -6,53 +6,43 @@ namespace IdleGame;
 public partial class Inventory : Control
 {
 	private VBoxContainer _resourceContainer;
-	private Dictionary<string, Label> _resourceLabels = new();
+	private List<InventoryLine> _resourceLines = new();
 	
 	public override void _Ready()
 	{
 		_resourceContainer = GetNode<VBoxContainer>("VBoxContainer/Resources");
+		var inventoryLinePath = "res://scenes/Inventory/InventoryLine.tscn";
+		var inventoryLineScene = GD.Load<PackedScene>(inventoryLinePath);
 
-		// Create labels for each resource
+		// Clean up any existing lines
+		foreach (var line in _resourceLines)
+		{
+			if (line != null && IsInstanceValid(line))
+			{
+				line.QueueFree();
+			}
+		}
+		_resourceLines.Clear();
+
+		// Create lines for each resource
 		foreach (var resource in ResourceData.Instance.ListResources())
 		{
-			var label = new Label
-			{
-				HorizontalAlignment = HorizontalAlignment.Center,
-				ThemeTypeVariation = "",
-			};
-			
-			// Set font size using theme override
-			label.AddThemeConstantOverride("font_size", 32);
-			
-			_resourceContainer.AddChild(label);
-			_resourceLabels[resource.Id] = label;
-		}
-		
-		// Connect to inventory changes
-		GameState.Instance.InventoryChanged += UpdateDisplay;
-		
-		UpdateDisplay();
-	}
-	
-	private void UpdateDisplay()
-	{
-		foreach (var (resourceId, label) in _resourceLabels)
-		{
-			var resourceInfo = ResourceData.Instance.GetResourceById(resourceId);
-			var quantity = GameState.Instance.GetResouceQuantity(resourceId);
-			label.Text = $"{resourceInfo.Name}: {quantity}";
+			var line = inventoryLineScene.Instantiate<InventoryLine>();
+			line.ResourceId = resource.Id;
+			_resourceContainer.AddChild(line);
+			_resourceLines.Add(line);
 		}
 	}
 
 	public override void _ExitTree()
 	{
-		foreach (var label in _resourceLabels.Values)
+		foreach (var line in _resourceLines)
 		{
-			if (label != null && IsInstanceValid(label))
+			if (line != null && IsInstanceValid(line))
 			{
-				label.QueueFree();
+				line.QueueFree();
 			}
 		}
-		_resourceLabels.Clear();
+		_resourceLines.Clear();
 	}
 } 

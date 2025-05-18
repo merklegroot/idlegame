@@ -16,7 +16,7 @@
     {
         "id": "axe",
         "name": "Axe",
-        "icon": "res://assets/rpg-icons/Tool/Axe.png",
+        "icon": "res://assets/rpg-icons/Weapon & Tool/Axe.png",
         "description": "A basic tool for cutting wood more efficiently",
         "recipe": [
             { "id": "wood", "quantity": 1 },

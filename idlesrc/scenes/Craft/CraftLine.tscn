@@ -33,8 +33,14 @@ theme_override_font_sizes/font_size = 20
 text = "Recipe Name"
 vertical_alignment = 1
 
+[node name="Quantity" type="Label" parent="CraftArea/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "(0)"
+vertical_alignment = 1
+
 [node name="Requirements" type="Label" parent="."]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Requirements"
-vertical_alignment = 1 
+vertical_alignment = 1

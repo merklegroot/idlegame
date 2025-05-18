@@ -11,6 +11,7 @@ public partial class CraftLine : HBoxContainer
 	private TextureRect _icon;
 	private Button _craftArea;
 	private Label _nameLabel;
+	private Label _quantityLabel;
 	private Label _requirementsLabel;
 	
 	private ResourceInfo _resourceInfo;
@@ -21,6 +22,7 @@ public partial class CraftLine : HBoxContainer
 		_icon = GetNode<TextureRect>("CraftArea/HBoxContainer/Icon");
 		_craftArea = GetNode<Button>("CraftArea");
 		_nameLabel = GetNode<Label>("CraftArea/HBoxContainer/Label");
+		_quantityLabel = GetNode<Label>("CraftArea/HBoxContainer/Quantity");
 		_requirementsLabel = GetNode<Label>("Requirements");
 		
 		// Get resource info
@@ -46,6 +48,11 @@ public partial class CraftLine : HBoxContainer
 
 	private void UpdateDisplay()
 	{
+		// Update crafted item quantity
+		var craftedQuantity = GameState.Instance.GetResouceQuantity(ResourceId);
+		_quantityLabel.Text = $"({craftedQuantity})";
+		
+		// Update requirements
 		var requirements = "";
 		var canCraft = true;
 		
@@ -87,4 +94,4 @@ public partial class CraftLine : HBoxContainer
 		GameState.Instance.AddResource(ResourceId);
 		GD.Print($"{_resourceInfo.Name} crafted!");
 	}
-} 
+}

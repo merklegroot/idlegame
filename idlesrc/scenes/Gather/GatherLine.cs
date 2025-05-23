@@ -114,7 +114,7 @@ public partial class GatherLine : VBoxContainer
 
 		// Fire the hire event
 		HireRequested?.Invoke(requestMessage);
-		GD.Print($"Hire requested for resource: {JsonSerializer.Serialize(requestMessage)}");
+		GD.Print($"Publishing: {JsonSerializer.Serialize(requestMessage)}");
 	}
 	
 	private void OnGatheringComplete()

@@ -4,10 +4,12 @@ using System.Text.Json;
 
 namespace IdleGame;
 
-public partial class GameEvents : Node
+public partial class GameEventHandler : Node
 {
     public override void _Ready()
     {
+        GD.Print("GameEvents ready");
+
         // Subscribe to the hire event
         GatherLine.HireRequested += OnHireRequested;
     }
@@ -20,6 +22,6 @@ public partial class GameEvents : Node
 
     private void OnHireRequested(ResourceRequestModel request)
     {
-        GD.Print($"Hire requested for resource: {JsonSerializer.Serialize(request)}");
+        GD.Print($"Event handler - Received: {JsonSerializer.Serialize(request)}");
     }
 }

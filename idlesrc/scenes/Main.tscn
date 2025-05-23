@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=5 format=3 uid="uid://bavn8o0bxg71"]
 
 [ext_resource type="PackedScene" path="res://scenes/Gather/GatherPanel.tscn" id="1_gathering"]
 [ext_resource type="PackedScene" path="res://scenes/Inventory/Inventory.tscn" id="2_inventory"]
 [ext_resource type="PackedScene" path="res://scenes/Craft/CraftPanel.tscn" id="3_crafting"]
+[ext_resource type="PackedScene" path="res://scenes/Character/Character.tscn" id="4_character"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -20,13 +21,21 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 20
-tab_height = 64
+current_tab = 0
 
 [node name="Gathering" parent="TabContainer" instance=ExtResource("1_gathering")]
-layout_mode = 2
+metadata/_tab_index = 0
 
 [node name="Inventory" parent="TabContainer" instance=ExtResource("2_inventory")]
+visible = false
 layout_mode = 2
+metadata/_tab_index = 1
 
 [node name="Crafting" parent="TabContainer" instance=ExtResource("3_crafting")]
+visible = false
+metadata/_tab_index = 2
+
+[node name="Character" parent="TabContainer" instance=ExtResource("4_character")]
+visible = false
 layout_mode = 2
+metadata/_tab_index = 3

@@ -9,7 +9,11 @@ public partial class AppProgressBar : Control
 	private Label _label;
 	private ColorRect _background;
 	private ColorRect _fill;
-	private ColorRect _border;
+	private ColorRect _borderTop;
+	private ColorRect _borderRight;
+	private ColorRect _borderBottom;
+	private ColorRect _borderLeft;
+	private const int BorderSize = 2;
 
 	public float Value
 	{
@@ -49,13 +53,36 @@ public partial class AppProgressBar : Control
 		};
 		AddChild(_fill);
 
-		// Create border
-		_border = new ColorRect
+		// Create border edges
+		var borderColor = new Color(0.8f, 0.8f, 0.8f);
+
+		_borderTop = new ColorRect
 		{
-			Color = new Color(0.8f, 0.8f, 0.8f),
+			Color = borderColor,
 			MouseFilter = MouseFilterEnum.Ignore
 		};
-		AddChild(_border);
+		AddChild(_borderTop);
+
+		_borderRight = new ColorRect
+		{
+			Color = borderColor,
+			MouseFilter = MouseFilterEnum.Ignore
+		};
+		AddChild(_borderRight);
+
+		_borderBottom = new ColorRect
+		{
+			Color = borderColor,
+			MouseFilter = MouseFilterEnum.Ignore
+		};
+		AddChild(_borderBottom);
+
+		_borderLeft = new ColorRect
+		{
+			Color = borderColor,
+			MouseFilter = MouseFilterEnum.Ignore
+		};
+		AddChild(_borderLeft);
 
 		// Create label
 		_label = new Label
@@ -72,21 +99,28 @@ public partial class AppProgressBar : Control
 	{
 		// Update layout
 		var rect = GetRect();
-		var borderSize = 2;
 		
 		// Background fills entire control
 		_background.Position = Vector2.Zero;
 		_background.Size = rect.Size;
 
-		// Border is 2px around the edges
-		_border.Position = Vector2.Zero;
-		_border.Size = rect.Size;
-		_border.Modulate = new Color(0.8f, 0.8f, 0.8f, 1.0f);
+		// Position border edges
+		_borderTop.Position = Vector2.Zero;
+		_borderTop.Size = new Vector2(rect.Size.X, BorderSize);
 
-		// Fill is based on value
+		_borderRight.Position = new Vector2(rect.Size.X - BorderSize, 0);
+		_borderRight.Size = new Vector2(BorderSize, rect.Size.Y);
+
+		_borderBottom.Position = new Vector2(0, rect.Size.Y - BorderSize);
+		_borderBottom.Size = new Vector2(rect.Size.X, BorderSize);
+
+		_borderLeft.Position = Vector2.Zero;
+		_borderLeft.Size = new Vector2(BorderSize, rect.Size.Y);
+
+		// Fill width based on value/maxValue ratio
 		var fillWidth = Mathf.Floor(rect.Size.X * (_value / _maxValue));
-		_fill.Position = new Vector2(borderSize, borderSize);
-		_fill.Size = new Vector2(fillWidth - borderSize * 2, rect.Size.Y - borderSize * 2);
+		_fill.Position = new Vector2(BorderSize, BorderSize);
+		_fill.Size = new Vector2(fillWidth - BorderSize * 2, rect.Size.Y - BorderSize * 2);
 
 		// Label is centered
 		_label.Position = Vector2.Zero;

@@ -33,7 +33,7 @@ public partial class GatherLine : VBoxContainer
 		_gatherArea = GetNode<Button>("MainInfo/GatherArea");
 		_countLabel = GetNode<Label>("MainInfo/Count");
 		_employeeCountLabel = GetNode<Label>("EmployeeInfo/EmployeeCount");
-		_hireButton = GetNode<Button>("HireButton");
+		_hireButton = GetNode<Button>("EmployeeInfo/HireButton");
 		
 		// Get resource info
 		_resourceInfo = ResourceData.Instance.GetResourceById(ResourceId);

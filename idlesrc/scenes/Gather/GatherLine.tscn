@@ -65,6 +65,6 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Employees: 0"
 
-[node name="HireButton" type="Button" parent="."]
+[node name="HireButton" type="Button" parent="EmployeeInfo"]
 layout_mode = 2
 text = "Hire (5g)"

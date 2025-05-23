@@ -4,14 +4,16 @@
         "name": "Wood",
         "icon": "res://assets/rpg-icons/Material/Wood Log.png",
         "description": "Basic wood resource gathered from trees",
-        "isGatherable": true
+        "isGatherable": true,
+        "sellPrice": 1
     },
     {
         "id": "stone",
         "name": "Stone",
         "icon": "res://assets/cute-fantasy/individual_tiles/outdoor_decor/ground_rocks.png",
         "description": "Basic rock resource gathered from the stone",
-        "isGatherable": true
+        "isGatherable": true,
+        "sellPrice": 1
     },
     {
         "id": "axe",
@@ -22,6 +24,7 @@
             { "id": "wood", "quantity": 1 },
             { "id": "stone", "quantity": 2 }
         ],
-        "isGatherable": false
+        "isGatherable": false,
+        "sellPrice": 4
     }
 ]

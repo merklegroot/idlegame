@@ -29,6 +29,9 @@ public class ResourceInfo
 	[JsonPropertyName("isGatherable")]
 	public bool IsGatherable { get; set; }
 
+	[JsonPropertyName("sellPrice")]
+	public float SellPrice { get; set; }
+
 	[JsonPropertyName("recipe")]
 	public List<RecipeIngredient> Recipe { get; set; }
 } 

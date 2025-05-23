@@ -2,25 +2,51 @@
 
 [ext_resource type="Script" path="res://scenes/Inventory/InventoryLine.cs" id="1_script"]
 
-[node name="InventoryLine" type="HBoxContainer"]
-theme_override_constants/separation = 10
+[node name="InventoryLine" type="VBoxContainer"]
+theme_override_constants/separation = 5
 script = ExtResource("1_script")
 
-[node name="Icon" type="TextureRect" parent="."]
+[node name="MainInfo" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Icon" type="TextureRect" parent="MainInfo"]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="."]
+[node name="Label" type="Label" parent="MainInfo"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 32
 text = "Resource Name"
 vertical_alignment = 1
 
-[node name="Quantity" type="Label" parent="."]
+[node name="Quantity" type="Label" parent="MainInfo"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "0"
-vertical_alignment = 1 
+vertical_alignment = 1
+
+[node name="Price" type="Label" parent="."]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Sell Price: 0g"
+horizontal_alignment = 0
+
+[node name="ButtonContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="SellOne" type="Button" parent="ButtonContainer"]
+custom_minimum_size = Vector2(100, 32)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Sell 1"
+
+[node name="SellAll" type="Button" parent="ButtonContainer"]
+custom_minimum_size = Vector2(100, 32)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Sell All" 

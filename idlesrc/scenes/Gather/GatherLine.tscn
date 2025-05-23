@@ -52,13 +52,19 @@ theme_override_constants/separation = 10
 custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
 
+[node name="EmployeeProgress" type="ProgressBar" parent="EmployeeInfo"]
+custom_minimum_size = Vector2(200, 32)
+layout_mode = 2
+mouse_filter = 1
+max_value = 1.0
+step = 0.0
+show_percentage = false
+
 [node name="EmployeeCount" type="Label" parent="EmployeeInfo"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 24
 text = "Employees: 0"
-vertical_alignment = 1
 
-[node name="HireButton" type="Button" parent="EmployeeInfo"]
-custom_minimum_size = Vector2(100, 32)
+[node name="HireButton" type="Button" parent="."]
 layout_mode = 2
 text = "Hire (5g)"

@@ -9,6 +9,7 @@ public partial class GatherLine : VBoxContainer
 	public string ResourceId { get; set; } = null;
 	
 	private ProgressBar _progressBar;
+	private ProgressBar _employeeProgressBar;
 	private TextureRect _icon;
 	private Button _gatherArea;
 	private Label _countLabel;
@@ -18,6 +19,7 @@ public partial class GatherLine : VBoxContainer
 	private bool _gathering = false;
 	private float _gatherSpeed = 0.5f;  // Time in seconds to complete gathering
 	private float _progress = 0.0f;
+	private float _employeeProgress = 0.0f;
 	
 	private ResourceInfo _resourceInfo;
 	private float _employeeCost;
@@ -26,11 +28,12 @@ public partial class GatherLine : VBoxContainer
 	{
 		// Get references to UI elements
 		_progressBar = GetNode<ProgressBar>("MainInfo/GatherArea/HBoxContainer/ProgressBar");
+		_employeeProgressBar = GetNode<ProgressBar>("EmployeeInfo/EmployeeProgress");
 		_icon = GetNode<TextureRect>("MainInfo/Icon");
 		_gatherArea = GetNode<Button>("MainInfo/GatherArea");
 		_countLabel = GetNode<Label>("MainInfo/Count");
 		_employeeCountLabel = GetNode<Label>("EmployeeInfo/EmployeeCount");
-		_hireButton = GetNode<Button>("EmployeeInfo/HireButton");
+		_hireButton = GetNode<Button>("HireButton");
 		
 		// Get resource info
 		_resourceInfo = ResourceData.Instance.GetResourceById(ResourceId);
@@ -54,6 +57,7 @@ public partial class GatherLine : VBoxContainer
 		
 		// Initialize UI
 		_progressBar.Value = _progress;
+		_employeeProgressBar.Value = _employeeProgress;
 		_icon.Texture = GD.Load<Texture2D>(_resourceInfo.Icon);
 		UpdateResourceCountDisplay();
 		UpdateEmployeeDisplay();

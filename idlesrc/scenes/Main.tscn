@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://bavn8o0bxg71"]
+[gd_scene load_steps=6 format=3 uid="uid://bavn8o0bxg71"]
 
 [ext_resource type="PackedScene" path="res://scenes/Gather/GatherPanel.tscn" id="1_gathering"]
 [ext_resource type="PackedScene" path="res://scenes/Inventory/Inventory.tscn" id="2_inventory"]
 [ext_resource type="PackedScene" path="res://scenes/Craft/CraftPanel.tscn" id="3_crafting"]
 [ext_resource type="PackedScene" path="res://scenes/Character/Character.tscn" id="4_character"]
+[ext_resource type="Script" path="res://scenes/Main.cs" id="5_script"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -12,6 +13,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("5_script")
 
 [node name="TabContainer" type="TabContainer" parent="."]
 layout_mode = 1

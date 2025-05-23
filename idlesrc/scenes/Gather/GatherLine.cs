@@ -3,7 +3,7 @@ using System;
 
 namespace IdleGame;
 
-public partial class GatherLine : HBoxContainer
+public partial class GatherLine : VBoxContainer
 {
 	[Export]
 	public string ResourceId { get; set; } = null;
@@ -12,6 +12,8 @@ public partial class GatherLine : HBoxContainer
 	private TextureRect _icon;
 	private Button _gatherArea;
 	private Label _countLabel;
+	private Label _employeeCountLabel;
+	private Button _hireButton;
 	
 	private bool _gathering = false;
 	private float _gatherSpeed = 0.5f;  // Time in seconds to complete gathering
@@ -22,10 +24,12 @@ public partial class GatherLine : HBoxContainer
 	public override void _Ready()
 	{
 		// Get references to UI elements
-		_progressBar = GetNode<ProgressBar>("GatherArea/HBoxContainer/ProgressBar");
-		_icon = GetNode<TextureRect>("GatherArea/HBoxContainer/Icon");
-		_gatherArea = GetNode<Button>("GatherArea");
-		_countLabel = GetNode<Label>("Count");
+		_progressBar = GetNode<ProgressBar>("MainInfo/GatherArea/HBoxContainer/ProgressBar");
+		_icon = GetNode<TextureRect>("MainInfo/GatherArea/HBoxContainer/Icon");
+		_gatherArea = GetNode<Button>("MainInfo/GatherArea");
+		_countLabel = GetNode<Label>("MainInfo/Count");
+		_employeeCountLabel = GetNode<Label>("EmployeeInfo/EmployeeCount");
+		_hireButton = GetNode<Button>("EmployeeInfo/HireButton");
 		
 		// Get resource info
 		_resourceInfo = ResourceData.Instance.GetResourceById(ResourceId);
@@ -35,8 +39,9 @@ public partial class GatherLine : HBoxContainer
 			return;
 		}
 		
-		// Connect button press signal
+		// Connect button press signals
 		_gatherArea.Pressed += OnGatherAreaPressed;
+		_hireButton.Pressed += OnHireButtonPressed;
 		
 		// Connect to inventory changes
 		GameState.Instance.InventoryChanged += (id, qty) => UpdateResourceCountDisplay();
@@ -45,6 +50,7 @@ public partial class GatherLine : HBoxContainer
 		_progressBar.Value = _progress;
 		_icon.Texture = GD.Load<Texture2D>(_resourceInfo.Icon);
 		UpdateResourceCountDisplay();
+		UpdateEmployeeDisplay();
 		
 		// Set tooltip
 		_gatherArea.TooltipText = _resourceInfo.Description;
@@ -88,5 +94,16 @@ public partial class GatherLine : HBoxContainer
 		var count = GameState.Instance.GetResouceQuantity(ResourceId);
 		
 		_countLabel.Text = $"{_resourceInfo?.Name} ({ResourceId}): {count}";
+	}
+	
+	private void OnHireButtonPressed()
+	{
+		// TODO: Implement hiring functionality
+		GD.Print($"Hire button pressed for {_resourceInfo.Name}");
+	}
+	
+	private void UpdateEmployeeDisplay()
+	{
+		_employeeCountLabel.Text = "Employees: 0"; // TODO: Update when employee system is implemented
 	}
 } 

@@ -17,6 +17,7 @@ public partial class GameState : Node
     public override void _Ready()
     {
         Instance = this;
+        AddMoney(100); // Start with 100 money
     }
     
     public void AddResource(string resourceId, int quantity = 1)

@@ -39,6 +39,7 @@ public partial class InventoryLine : VBoxContainer
 		
 		// Connect button signals
 		_sellOneButton.Pressed += OnSellOnePressed;
+		_sellAllButton.Pressed += OnSellAllPressed;
 		
 		// Initialize UI
 		_icon.Texture = GD.Load<Texture2D>(_resourceInfo.Icon);
@@ -54,6 +55,7 @@ public partial class InventoryLine : VBoxContainer
 		
 		// Disable sell buttons if we don't have any of this resource
 		_sellOneButton.Disabled = quantity < 1;
+		_sellAllButton.Disabled = quantity < 1;
 	}
 	
 	private void OnSellOnePressed()
@@ -66,6 +68,22 @@ public partial class InventoryLine : VBoxContainer
 			// Add money
 			GameState.Instance.AddMoney(_resourceInfo.SellPrice);
 			GD.Print($"Sold 1 {_resourceInfo.Name} for {_resourceInfo.SellPrice}g");
+		}
+	}
+	
+	private void OnSellAllPressed()
+	{
+		var quantity = GameState.Instance.GetResouceQuantity(ResourceId);
+		if (quantity > 0)
+		{
+			// Calculate total value
+			var totalValue = quantity * _resourceInfo.SellPrice;
+			
+			// Remove all items
+			GameState.Instance.AddResource(ResourceId, -quantity);
+			// Add money
+			GameState.Instance.AddMoney(totalValue);
+			GD.Print($"Sold {quantity} {_resourceInfo.Name} for {totalValue}g");
 		}
 	}
 } 

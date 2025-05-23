@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/Gather/AppProgressBar.cs" id="1_progress"]
 
-[node name="AppProgressBar" type="ProgressBar"]
+[node name="AppProgressBar" type="Control"]
 custom_minimum_size = Vector2(200, 32)
 max_value = 1.0
 step = 0.01

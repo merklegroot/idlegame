@@ -8,8 +8,8 @@ public partial class GatherLine : VBoxContainer
 	[Export]
 	public string ResourceId { get; set; } = null;
 	
-	private ProgressBar _progressBar;
-	private ProgressBar _employeeProgressBar;
+	private AppProgressBar _progressBar;
+	private AppProgressBar _employeeProgressBar;
 	private TextureRect _icon;
 	private Button _gatherArea;
 	private Label _countLabel;
@@ -28,8 +28,8 @@ public partial class GatherLine : VBoxContainer
 	public override void _Ready()
 	{
 		// Get references to UI elements
-		_progressBar = GetNode<ProgressBar>("MainInfo/GatherArea/HBoxContainer/ProgressBar");
-		_employeeProgressBar = GetNode<ProgressBar>("EmployeeInfo/EmployeeProgress");
+		_progressBar = GetNode<AppProgressBar>("MainInfo/GatherArea/HBoxContainer/ProgressBar");
+		_employeeProgressBar = GetNode<AppProgressBar>("EmployeeInfo/EmployeeProgress");
 		_icon = GetNode<TextureRect>("MainInfo/Icon");
 		_gatherArea = GetNode<Button>("MainInfo/GatherArea");
 		_countLabel = GetNode<Label>("MainInfo/Count");

@@ -10,15 +10,16 @@ config_version=5
 
 [application]
 
-config/name="Idle Game"
+config/name="IdleGame"
 run/main_scene="res://scenes/Main.tscn"
-config/features=PackedStringArray("4.3", "C#", "Mobile")
+config/features=PackedStringArray("4.2", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
 GameState="*res://scenes/GameState.tscn"
 ResourceData="*res://scenes/ResourceData.tscn"
+GameEvents="*res://scripts/GameEvents.cs"
 
 [display]
 

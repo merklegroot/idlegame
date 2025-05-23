@@ -1,6 +1,7 @@
 using Godot;
 using System;
-
+using IdleGame.Models;
+using System.Text.Json;
 namespace IdleGame;
 
 public partial class GatherLine : VBoxContainer
@@ -24,6 +25,9 @@ public partial class GatherLine : VBoxContainer
 	
 	private ResourceInfo _resourceInfo;
 	private float _employeeCost;
+	
+	// Add event for hire requests
+	public static event Action<ResourceRequestModel> HireRequested;
 	
 	public override void _Ready()
 	{
@@ -106,12 +110,11 @@ public partial class GatherLine : VBoxContainer
 	
 	private void OnHireButtonPressed()
 	{
-		if (GameState.Instance.GetMoney() >= _employeeCost)
-		{
-			GameState.Instance.AddMoney(-_employeeCost);
-			GameState.Instance.AddEmployee(ResourceId);
-			GD.Print($"Hired an employee for {_resourceInfo.Name} gathering!");
-		}
+		var requestMessage = new ResourceRequestModel(ResourceId);
+
+		// Fire the hire event
+		HireRequested?.Invoke(requestMessage);
+		GD.Print($"Hire requested for resource: {JsonSerializer.Serialize(requestMessage)}");
 	}
 	
 	private void OnGatheringComplete()

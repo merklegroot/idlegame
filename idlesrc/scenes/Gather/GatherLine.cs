@@ -20,6 +20,7 @@ public partial class GatherLine : VBoxContainer
 	private float _gatherSpeed = 0.5f;  // Time in seconds to complete gathering
 	private float _progress = 0.0f;
 	private float _employeeProgress = 0.0f;
+	private float _employeeGatherSpeed = 2.0f;  // Base time in seconds for one employee
 	
 	private ResourceInfo _resourceInfo;
 	private float _employeeCost;
@@ -78,6 +79,19 @@ public partial class GatherLine : VBoxContainer
 				OnGatheringComplete();
 			}
 		}
+		
+		// Handle employee gathering
+		var employeeCount = GameState.Instance.GetEmployeeCount(ResourceId);
+		if (employeeCount > 0)
+		{
+			_employeeProgress += (float)delta * employeeCount / _employeeGatherSpeed;
+			_employeeProgressBar.Value = _employeeProgress;
+			
+			if (_employeeProgress >= 1.0f)
+			{
+				OnEmployeeGatheringComplete();
+			}
+		}
 	}
 	
 	private void OnGatherAreaPressed()
@@ -90,6 +104,16 @@ public partial class GatherLine : VBoxContainer
 		}
 	}
 	
+	private void OnHireButtonPressed()
+	{
+		if (GameState.Instance.GetMoney() >= _employeeCost)
+		{
+			GameState.Instance.AddMoney(-_employeeCost);
+			GameState.Instance.AddEmployee(ResourceId);
+			GD.Print($"Hired an employee for {_resourceInfo.Name} gathering!");
+		}
+	}
+	
 	private void OnGatheringComplete()
 	{
 		_gathering = false;
@@ -99,21 +123,18 @@ public partial class GatherLine : VBoxContainer
 		GD.Print($"{_resourceInfo.Name} gathered!");
 	}
 	
+	private void OnEmployeeGatheringComplete()
+	{
+		_employeeProgress = 0.0f;
+		_employeeProgressBar.Value = _employeeProgress;
+		GameState.Instance.AddResource(ResourceId);
+		GD.Print($"{_resourceInfo.Name} gathered by employees!");
+	}
+	
 	private void UpdateResourceCountDisplay()
 	{
 		var count = GameState.Instance.GetResouceQuantity(ResourceId);
-		
 		_countLabel.Text = $"{_resourceInfo?.Name}: {count}";
-	}
-	
-	private void OnHireButtonPressed()
-	{
-		if (GameState.Instance.GetMoney() >= _employeeCost)
-		{
-			GameState.Instance.AddMoney(-_employeeCost);
-			GameState.Instance.AddEmployee(ResourceId);
-			GD.Print($"Hired an employee for {_resourceInfo.Name} gathering!");
-		}
 	}
 	
 	private void UpdateEmployeeDisplay()

@@ -93,7 +93,7 @@ public partial class GatherLine : VBoxContainer
 	{
 		var count = GameState.Instance.GetResouceQuantity(ResourceId);
 		
-		_countLabel.Text = $"{_resourceInfo?.Name} ({ResourceId}): {count}";
+		_countLabel.Text = $"{_resourceInfo?.Name}: {count}";
 	}
 	
 	private void OnHireButtonPressed()

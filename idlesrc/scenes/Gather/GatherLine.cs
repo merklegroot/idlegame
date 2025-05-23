@@ -26,7 +26,7 @@ public partial class GatherLine : VBoxContainer
 	{
 		// Get references to UI elements
 		_progressBar = GetNode<ProgressBar>("MainInfo/GatherArea/HBoxContainer/ProgressBar");
-		_icon = GetNode<TextureRect>("MainInfo/GatherArea/HBoxContainer/Icon");
+		_icon = GetNode<TextureRect>("MainInfo/Icon");
 		_gatherArea = GetNode<Button>("MainInfo/GatherArea");
 		_countLabel = GetNode<Label>("MainInfo/Count");
 		_employeeCountLabel = GetNode<Label>("EmployeeInfo/EmployeeCount");

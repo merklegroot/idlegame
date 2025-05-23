@@ -10,6 +10,12 @@ script = ExtResource("1_gather")
 layout_mode = 2
 theme_override_constants/separation = 10
 
+[node name="Icon" type="TextureRect" parent="MainInfo"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
 [node name="GatherArea" type="Button" parent="MainInfo"]
 custom_minimum_size = Vector2(242, 32)
 layout_mode = 2
@@ -23,12 +29,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 10
-
-[node name="Icon" type="TextureRect" parent="MainInfo/GatherArea/HBoxContainer"]
-custom_minimum_size = Vector2(32, 32)
-layout_mode = 2
-expand_mode = 1
-stretch_mode = 5
 
 [node name="ProgressBar" type="ProgressBar" parent="MainInfo/GatherArea/HBoxContainer"]
 custom_minimum_size = Vector2(200, 32)
@@ -47,6 +47,10 @@ vertical_alignment = 1
 [node name="EmployeeInfo" type="HBoxContainer" parent="."]
 layout_mode = 2
 theme_override_constants/separation = 10
+
+[node name="Spacer" type="Control" parent="EmployeeInfo"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
 
 [node name="EmployeeCount" type="Label" parent="EmployeeInfo"]
 layout_mode = 2

@@ -49,6 +49,8 @@ public partial class GatherLine : VBoxContainer
 		
 		// Connect to inventory changes
 		GameState.Instance.InventoryChanged += (id, qty) => UpdateResourceCountDisplay();
+		GameState.Instance.EmployeesChanged += (id, count) => UpdateEmployeeDisplay();
+		GameState.Instance.MoneyChanged += UpdateEmployeeDisplay;
 		
 		// Initialize UI
 		_progressBar.Value = _progress;
@@ -102,13 +104,19 @@ public partial class GatherLine : VBoxContainer
 	
 	private void OnHireButtonPressed()
 	{
-		// TODO: Implement hiring functionality
-		GD.Print($"Hire button pressed for {_resourceInfo.Name}");
+		if (GameState.Instance.GetMoney() >= _employeeCost)
+		{
+			GameState.Instance.AddMoney(-_employeeCost);
+			GameState.Instance.AddEmployee(ResourceId);
+			GD.Print($"Hired an employee for {_resourceInfo.Name} gathering!");
+		}
 	}
 	
 	private void UpdateEmployeeDisplay()
 	{
-		_employeeCountLabel.Text = "Employees: 0"; // TODO: Update when employee system is implemented
+		var count = GameState.Instance.GetEmployeeCount(ResourceId);
+		_employeeCountLabel.Text = $"Employees: {count}";
 		_hireButton.Text = $"Hire ({_employeeCost:F1}g)";
+		_hireButton.Disabled = GameState.Instance.GetMoney() < _employeeCost;
 	}
 } 

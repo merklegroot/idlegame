@@ -37,7 +37,7 @@ public partial class CraftLine : HBoxContainer
 		_craftArea.Pressed += OnCraftAreaPressed;
 		
 		// Connect to inventory changes to update requirements display
-		GameState.Instance.InventoryChanged += UpdateDisplay;
+		GameState.Instance.InventoryChanged += (id, qty) => UpdateDisplay();
 		
 		// Initialize UI
 		_icon.Texture = GD.Load<Texture2D>(_resourceInfo.Icon);

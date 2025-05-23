@@ -39,7 +39,7 @@ public partial class GatherLine : HBoxContainer
 		_gatherArea.Pressed += OnGatherAreaPressed;
 		
 		// Connect to inventory changes
-		GameState.Instance.InventoryChanged += UpdateResourceCountDisplay;
+		GameState.Instance.InventoryChanged += (id, qty) => UpdateResourceCountDisplay();
 		
 		// Initialize UI
 		_progressBar.Value = _progress;

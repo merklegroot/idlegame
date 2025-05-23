@@ -35,7 +35,7 @@ public partial class InventoryLine : VBoxContainer
 		}
 		
 		// Connect to inventory changes
-		GameState.Instance.InventoryChanged += UpdateDisplay;
+		GameState.Instance.InventoryChanged += (id, qty) => UpdateDisplay();
 		
 		// Initialize UI
 		_icon.Texture = GD.Load<Texture2D>(_resourceInfo.Icon);

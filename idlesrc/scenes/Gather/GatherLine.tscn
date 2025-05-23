@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://bdn24ywetpqdm"]
+[gd_scene load_steps=3 format=3 uid="uid://bdn24ywetpqdm"]
 
 [ext_resource type="Script" path="res://scenes/Gather/GatherLine.cs" id="1_gather"]
+[ext_resource type="PackedScene" path="res://scenes/Gather/AppProgressBar.tscn" id="2_progress"]
 
 [node name="GatherLine" type="VBoxContainer"]
 theme_override_constants/separation = 10
@@ -30,14 +31,9 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 10
 
-[node name="ProgressBar" type="ProgressBar" parent="MainInfo/GatherArea/HBoxContainer"]
-custom_minimum_size = Vector2(200, 32)
+[node name="ProgressBar" parent="MainInfo/GatherArea/HBoxContainer" instance=ExtResource("2_progress")]
 layout_mode = 2
 size_flags_vertical = 4
-mouse_filter = 1
-max_value = 1.0
-step = 0.0
-show_percentage = false
 
 [node name="Count" type="Label" parent="MainInfo"]
 layout_mode = 2
@@ -52,13 +48,8 @@ theme_override_constants/separation = 10
 custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
 
-[node name="EmployeeProgress" type="ProgressBar" parent="EmployeeInfo"]
-custom_minimum_size = Vector2(200, 32)
+[node name="EmployeeProgress" parent="EmployeeInfo" instance=ExtResource("2_progress")]
 layout_mode = 2
-mouse_filter = 1
-max_value = 1.0
-step = 0.0
-show_percentage = false
 
 [node name="EmployeeCount" type="Label" parent="EmployeeInfo"]
 layout_mode = 2

@@ -20,6 +20,7 @@ public partial class GatherLine : VBoxContainer
 	private float _progress = 0.0f;
 	
 	private ResourceInfo _resourceInfo;
+	private float _employeeCost;
 	
 	public override void _Ready()
 	{
@@ -38,6 +39,9 @@ public partial class GatherLine : VBoxContainer
 			GD.PrintErr($"Failed to load resource info for {ResourceId}");
 			return;
 		}
+		
+		// Calculate employee cost (10x sell price)
+		_employeeCost = _resourceInfo.SellPrice * 10;
 		
 		// Connect button press signals
 		_gatherArea.Pressed += OnGatherAreaPressed;
@@ -105,5 +109,6 @@ public partial class GatherLine : VBoxContainer
 	private void UpdateEmployeeDisplay()
 	{
 		_employeeCountLabel.Text = "Employees: 0"; // TODO: Update when employee system is implemented
+		_hireButton.Text = $"Hire ({_employeeCost:F1}g)";
 	}
 } 

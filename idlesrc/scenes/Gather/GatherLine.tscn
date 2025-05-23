@@ -57,4 +57,4 @@ vertical_alignment = 1
 [node name="HireButton" type="Button" parent="EmployeeInfo"]
 custom_minimum_size = Vector2(100, 32)
 layout_mode = 2
-text = "Hire ($5)"
+text = "Hire (5g)"

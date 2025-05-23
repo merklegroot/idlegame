@@ -37,6 +37,9 @@ public partial class InventoryLine : VBoxContainer
 		// Connect to inventory changes
 		GameState.Instance.InventoryChanged += (id, qty) => UpdateDisplay();
 		
+		// Connect button signals
+		_sellOneButton.Pressed += OnSellOnePressed;
+		
 		// Initialize UI
 		_icon.Texture = GD.Load<Texture2D>(_resourceInfo.Icon);
 		_nameLabel.Text = _resourceInfo.Name;
@@ -48,5 +51,21 @@ public partial class InventoryLine : VBoxContainer
 	{
 		var quantity = GameState.Instance.GetResouceQuantity(ResourceId);
 		_quantityLabel.Text = quantity.ToString();
+		
+		// Disable sell buttons if we don't have any of this resource
+		_sellOneButton.Disabled = quantity < 1;
+	}
+	
+	private void OnSellOnePressed()
+	{
+		var quantity = GameState.Instance.GetResouceQuantity(ResourceId);
+		if (quantity >= 1)
+		{
+			// Remove one item
+			GameState.Instance.AddResource(ResourceId, -1);
+			// Add money
+			GameState.Instance.AddMoney(_resourceInfo.SellPrice);
+			GD.Print($"Sold 1 {_resourceInfo.Name} for {_resourceInfo.SellPrice}g");
+		}
 	}
 } 

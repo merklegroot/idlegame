@@ -1,6 +1,5 @@
 using Godot;
 using IdleGame.Models;
-using System.Text.Json;
 
 namespace IdleGame;
 
@@ -22,6 +21,19 @@ public partial class GameEventHandler : Node
 
     private void OnHireRequested(ResourceRequestModel request)
     {
-        GD.Print($"Event handler - Received: {JsonSerializer.Serialize(request)}");
+        var resourceInfo = ResourceData.Instance.GetResourceById(request.ResourceId);
+        if (resourceInfo == null)
+        {
+            GD.PrintErr($"Failed to load resource info for {request.ResourceId}");
+            return;
+        }
+
+        var employeeCost = resourceInfo.SellPrice * 10;
+        if (GameState.Instance.GetMoney() >= employeeCost)
+        {
+            GameState.Instance.AddMoney(-employeeCost);
+            GameState.Instance.AddEmployee(request.ResourceId);
+            GD.Print($"Hired an employee for {resourceInfo.Name} gathering!");
+        }
     }
 }

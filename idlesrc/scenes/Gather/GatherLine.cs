@@ -100,22 +100,16 @@ public partial class GatherLine : VBoxContainer
 	
 	private void OnGatherAreaPressed()
 	{
-		if (!_gathering)
-		{
-			_gathering = true;
-			_progress = 0.0f;
-			_progressBar.Value = _progress;
-		}
+		if (_gathering)
+			return;
+		
+		_gathering = true;
+		_progress = 0.0f;
+		_progressBar.Value = _progress;		
 	}
 	
-	private void OnHireButtonPressed()
-	{
-		var requestMessage = new ResourceRequestModel(ResourceId);
-
-		// Fire the hire event
-		HireRequested?.Invoke(requestMessage);
-		GD.Print($"Publishing: {JsonSerializer.Serialize(requestMessage)}");
-	}
+	private void OnHireButtonPressed() =>
+		HireRequested?.Invoke(new ResourceRequestModel(ResourceId));
 	
 	private void OnGatheringComplete()
 	{
@@ -123,7 +117,6 @@ public partial class GatherLine : VBoxContainer
 		_progress = 0.0f;
 		_progressBar.Value = _progress;
 		GameState.Instance.AddResource(ResourceId);
-		GD.Print($"{_resourceInfo.Name} gathered!");
 	}
 	
 	private void OnEmployeeGatheringComplete()
@@ -131,7 +124,6 @@ public partial class GatherLine : VBoxContainer
 		_employeeProgress = 0.0f;
 		_employeeProgressBar.Value = _employeeProgress;
 		GameState.Instance.AddResource(ResourceId);
-		GD.Print($"{_resourceInfo.Name} gathered by employees!");
 	}
 	
 	private void UpdateResourceCountDisplay()

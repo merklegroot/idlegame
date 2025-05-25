@@ -17,17 +17,14 @@ public partial class GatherLine : VBoxContainer
 	private Label _employeeCountLabel;
 	private Button _hireButton;
 	
-	private bool _gathering = false;
-	private float _gatherSpeed = 0.5f;  // Time in seconds to complete gathering
+	private DateTime? _gatherStartTime = null;
+	private static readonly TimeSpan TimeToGather = TimeSpan.FromSeconds(1.0);
 	private float _progress = 0.0f;
 	private float _employeeProgress = 0.0f;
 	private float _employeeGatherSpeed = 2.0f;  // Base time in seconds for one employee
 	
 	private ResourceInfo _resourceInfo;
 	private float _employeeCost;
-	
-	// Add event for hire requests
-	public static event Action<ResourceRequestModel> HireRequested;
 	
 	public override void _Ready()
 	{
@@ -58,9 +55,8 @@ public partial class GatherLine : VBoxContainer
 		// Connect to inventory changes
 		GameState.Instance.InventoryChanged += (id, qty) => UpdateResourceCountDisplay();
 		GameState.Instance.EmployeesChanged += (id, count) => UpdateEmployeeDisplay();
-		GameState.Instance.MoneyChanged += UpdateEmployeeDisplay;
+		GameEvent.MoneyChanged += UpdateEmployeeDisplay;
 		
-		// Initialize UI
 		_progressBar.Value = _progress;
 		_employeeProgressBar.Value = _employeeProgress;
 		_icon.Texture = GD.Load<Texture2D>(_resourceInfo.Icon);
@@ -71,20 +67,26 @@ public partial class GatherLine : VBoxContainer
 		_gatherArea.TooltipText = _resourceInfo.Description;
 	}
 
-	public override void _Process(double delta)
+	private void ProcessGathering(double delta)
 	{
-		if (_gathering)
+		if (!_gatherStartTime.HasValue)
+			return;
+
+		var timeElapsed = DateTime.UtcNow - _gatherStartTime.Value;
+		if (timeElapsed >= TimeToGather)
 		{
-			_progress += (float)delta / _gatherSpeed;
-			_progressBar.Value = _progress;
-			
-			if (_progress >= 1.0f)
-			{
-				OnGatheringComplete();
-			}
+			_gatherStartTime = null;
+			OnGatheringComplete();
+			return;
 		}
 		
-		// Handle employee gathering
+
+		_progress = (float)timeElapsed.TotalMilliseconds / (float)TimeToGather.TotalMilliseconds;
+		_progressBar.Value = _progress;
+	}
+
+	private void ProcessEmployeeGathering(double delta)
+	{
 		var employeeCount = GameState.Instance.GetEmployeeCount(ResourceId);
 		if (employeeCount > 0)
 		{
@@ -97,23 +99,31 @@ public partial class GatherLine : VBoxContainer
 			}
 		}
 	}
+
+	public override void _Process(double delta)
+	{
+		ProcessGathering(delta);
+		ProcessEmployeeGathering(delta);
+	}
 	
 	private void OnGatherAreaPressed()
 	{
-		if (_gathering)
+		if(_gatherStartTime.HasValue)
+		{
 			return;
-		
-		_gathering = true;
+		}
+
+		_gatherStartTime = DateTime.UtcNow;
 		_progress = 0.0f;
-		_progressBar.Value = _progress;		
+		_progressBar.Value = _progress;
 	}
 	
 	private void OnHireButtonPressed() =>
-		HireRequested?.Invoke(new ResourceRequestModel(ResourceId));
-	
+		GameEvent.FireHireRequested(new ResourceRequestModel(ResourceId));
+		
 	private void OnGatheringComplete()
 	{
-		_gathering = false;
+		_gatherStartTime = null;
 		_progress = 0.0f;
 		_progressBar.Value = _progress;
 		GameState.Instance.AddResource(ResourceId);

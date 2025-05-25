@@ -1,6 +1,6 @@
 using Godot;
 using System.Collections.Generic;
-
+using IdleGame.Models;
 namespace IdleGame;
 
 public partial class Inventory : Control
@@ -32,6 +32,8 @@ public partial class Inventory : Control
 			_resourceContainer.AddChild(line);
 			_resourceLines.Add(line);
 		}
+
+		GameEvent.InventoryChanged += OnInventoryChanged;
 	}
 
 	public override void _ExitTree()
@@ -44,5 +46,10 @@ public partial class Inventory : Control
 			}
 		}
 		_resourceLines.Clear();
+	}
+
+	private void OnInventoryChanged(InventoryChangedMessage request)
+	{
+		GD.Print($"Inventory changed: {request.ResourceId} {request.Quantity}");
 	}
 } 

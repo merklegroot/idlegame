@@ -7,16 +7,12 @@ public partial class GameEventHandler : Node
 {
     public override void _Ready()
     {
-        GD.Print("GameEvents ready");
-
-        // Subscribe to the hire event
-        GatherLine.HireRequested += OnHireRequested;
+        GameEvent.HireRequested += OnHireRequested;
     }
 
     public override void _ExitTree()
     {
-        // Unsubscribe from the hire event
-        GatherLine.HireRequested -= OnHireRequested;
+        GameEvent.HireRequested -= OnHireRequested;
     }
 
     private void OnHireRequested(ResourceRequestModel request)

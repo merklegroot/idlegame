@@ -67,7 +67,6 @@ public partial class InventoryLine : VBoxContainer
 			GameState.Instance.AddResource(ResourceId, -1);
 			// Add money
 			GameState.Instance.AddMoney(_resourceInfo.SellPrice);
-			GD.Print($"Sold 1 {_resourceInfo.Name} for {_resourceInfo.SellPrice}g");
 		}
 	}
 	
@@ -83,7 +82,6 @@ public partial class InventoryLine : VBoxContainer
 			GameState.Instance.AddResource(ResourceId, -quantity);
 			// Add money
 			GameState.Instance.AddMoney(totalValue);
-			GD.Print($"Sold {quantity} {_resourceInfo.Name} for {totalValue}g");
 		}
 	}
 } 

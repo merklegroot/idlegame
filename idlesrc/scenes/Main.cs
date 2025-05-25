@@ -5,26 +5,18 @@ namespace IdleGame;
 public partial class Main : Control
 {
     private Label _moneyLabel;
-    
+
     public override void _Ready()
     {
         _moneyLabel = GetNode<Label>("Footer/MoneyLabel");
+        GameEvent.MoneyChanged += OnMoneyChanged;
         
-        // Connect to money changes
-        GameState.Instance.MoneyChanged += UpdateMoneyDisplay;
-        
-        // Initial display
-        UpdateMoneyDisplay();
+        OnMoneyChanged();
     }
-    
-    private void UpdateMoneyDisplay()
-    {
+
+    private void OnMoneyChanged() =>
         _moneyLabel.Text = $"Money: {GameState.Instance.GetMoney()}g";
-    }
     
-    public override void _ExitTree()
-    {
-        // Disconnect from money changes
-        GameState.Instance.MoneyChanged -= UpdateMoneyDisplay;
-    }
-} 
+    public override void _ExitTree() =>
+        GameEvent.MoneyChanged -= OnMoneyChanged;
+}

@@ -119,26 +119,26 @@ public partial class GatherLine : VBoxContainer
 	}
 	
 	private void OnHireButtonPressed() =>
-		GameEvent.FireHireRequested(new ResourceRequestModel(ResourceId));
+		GameEvent.FireHireRequested(new HireRequestMessage(ResourceId));
 		
 	private void OnGatheringComplete()
 	{
 		_gatherStartTime = null;
 		_progress = 0.0f;
 		_progressBar.Value = _progress;
-		GameState.Instance.AddResource(ResourceId);
+		GameState.Instance.DeltaResourceQuantity(ResourceId);
 	}
 	
 	private void OnEmployeeGatheringComplete()
 	{
 		_employeeProgress = 0.0f;
 		_employeeProgressBar.Value = _employeeProgress;
-		GameState.Instance.AddResource(ResourceId);
+		GameState.Instance.DeltaResourceQuantity(ResourceId);
 	}
 	
 	private void UpdateResourceCountDisplay()
 	{
-		var count = GameState.Instance.GetResouceQuantity(ResourceId);
+		var count = GameState.Instance.GetResourceQuantity(ResourceId);
 		_countLabel.Text = $"{_resourceInfo?.Name}: {count}";
 	}
 	

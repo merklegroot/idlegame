@@ -23,7 +23,7 @@ public partial class GameState : Node
 		AddMoney(100); // Start with 100 money
 	}
 	
-	public void AddResource(string resourceId, int quantity = 1)
+	public void DeltaResourceQuantity(string resourceId, int quantity = 1)
 	{
 		if (!_inventory.ContainsKey(resourceId))
 		{
@@ -43,7 +43,7 @@ public partial class GameState : Node
 	public float GetMoney() =>
 		_money;
 	
-	public int GetResouceQuantity(string resourceId)
+	public int GetResourceQuantity(string resourceId)
 	{
 		return _inventory.ContainsKey(resourceId) ? _inventory[resourceId] : 0;
 	}

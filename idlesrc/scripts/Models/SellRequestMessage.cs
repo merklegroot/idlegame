@@ -2,7 +2,7 @@ using System;
 
 namespace IdleGame.Models;
 
-public record ResourceRequestModel(string ResourceId)
+public record SellRequestMessage(string ResourceId, int Quantity)
 {
     public string Id { get; init;} = Guid.NewGuid().ToString();
 }

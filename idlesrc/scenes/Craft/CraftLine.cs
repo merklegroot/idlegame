@@ -49,7 +49,7 @@ public partial class CraftLine : HBoxContainer
 	private void UpdateDisplay()
 	{
 		// Update crafted item quantity
-		var craftedQuantity = GameState.Instance.GetResouceQuantity(ResourceId);
+		var craftedQuantity = GameState.Instance.GetResourceQuantity(ResourceId);
 		_quantityLabel.Text = $"({craftedQuantity})";
 		
 		// Update requirements
@@ -59,7 +59,7 @@ public partial class CraftLine : HBoxContainer
 		foreach (var ingredient in _resourceInfo.Recipe)
 		{
 			var ingredientInfo = ResourceData.Instance.GetResourceById(ingredient.Id);
-			var currentQuantity = GameState.Instance.GetResouceQuantity(ingredient.Id);
+			var currentQuantity = GameState.Instance.GetResourceQuantity(ingredient.Id);
 			var hasEnough = currentQuantity >= ingredient.Quantity;
 			
 			requirements += $"{ingredientInfo.Name}: {currentQuantity}/{ingredient.Quantity}";
@@ -79,7 +79,7 @@ public partial class CraftLine : HBoxContainer
 	{
 		// Verify we have all ingredients
 		if (!_resourceInfo.Recipe.All(ingredient => 
-			GameState.Instance.GetResouceQuantity(ingredient.Id) >= ingredient.Quantity))
+			GameState.Instance.GetResourceQuantity(ingredient.Id) >= ingredient.Quantity))
 		{
 			return;
 		}
@@ -87,11 +87,11 @@ public partial class CraftLine : HBoxContainer
 		// Remove ingredients
 		foreach (var ingredient in _resourceInfo.Recipe)
 		{
-			GameState.Instance.AddResource(ingredient.Id, -ingredient.Quantity);
+			GameState.Instance.DeltaResourceQuantity(ingredient.Id, -ingredient.Quantity);
 		}
 		
 		// Add crafted item
-		GameState.Instance.AddResource(ResourceId);
+		GameState.Instance.DeltaResourceQuantity(ResourceId);
 		GD.Print($"{_resourceInfo.Name} crafted!");
 	}
 }

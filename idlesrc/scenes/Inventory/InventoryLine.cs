@@ -1,4 +1,5 @@
 using Godot;
+using IdleGame.Models;
 
 namespace IdleGame;
 
@@ -50,7 +51,7 @@ public partial class InventoryLine : VBoxContainer
 
 	private void UpdateDisplay()
 	{
-		var quantity = GameState.Instance.GetResouceQuantity(ResourceId);
+		var quantity = GameState.Instance.GetResourceQuantity(ResourceId);
 		_quantityLabel.Text = quantity.ToString();
 		
 		// Disable sell buttons if we don't have any of this resource
@@ -60,28 +61,15 @@ public partial class InventoryLine : VBoxContainer
 	
 	private void OnSellOnePressed()
 	{
-		var quantity = GameState.Instance.GetResouceQuantity(ResourceId);
-		if (quantity >= 1)
-		{
-			// Remove one item
-			GameState.Instance.AddResource(ResourceId, -1);
-			// Add money
-			GameState.Instance.AddMoney(_resourceInfo.SellPrice);
-		}
+		GameEvent.FireSellRequested(new SellRequestMessage(ResourceId, 1));
 	}
 	
 	private void OnSellAllPressed()
 	{
-		var quantity = GameState.Instance.GetResouceQuantity(ResourceId);
-		if (quantity > 0)
-		{
-			// Calculate total value
-			var totalValue = quantity * _resourceInfo.SellPrice;
-			
-			// Remove all items
-			GameState.Instance.AddResource(ResourceId, -quantity);
-			// Add money
-			GameState.Instance.AddMoney(totalValue);
-		}
+		var quantity = GameState.Instance.GetResourceQuantity(ResourceId);
+		if (quantity <= 0)
+			return;
+
+		GameEvent.FireSellRequested(new SellRequestMessage(ResourceId, quantity));
 	}
-} 
+}

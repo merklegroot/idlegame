@@ -1,6 +1,8 @@
 using Godot;
 using System.Collections.Generic;
 using IdleGame.Models;
+using IdleGame.Models.Messages;
+
 namespace IdleGame;
 
 public partial class Inventory : Control

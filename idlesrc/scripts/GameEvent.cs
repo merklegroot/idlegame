@@ -1,5 +1,6 @@
 using System;
 using IdleGame.Models;
+using IdleGame.Models.Messages;
 
 public class GameEvent
 {

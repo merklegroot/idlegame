@@ -1,6 +1,7 @@
 using System;
 using Godot;
 using IdleGame.Models;
+using IdleGame.Models.Messages;
 
 namespace IdleGame;
 

@@ -2,6 +2,8 @@ using Godot;
 using System;
 using IdleGame.Models;
 using System.Text.Json;
+using IdleGame.Models.Messages;
+
 namespace IdleGame;
 
 public partial class GatherLine : VBoxContainer
@@ -21,7 +23,7 @@ public partial class GatherLine : VBoxContainer
 	private static readonly TimeSpan TimeToGather = TimeSpan.FromSeconds(1.0);
 	private float _progress = 0.0f;
 	private float _employeeProgress = 0.0f;
-	private float _employeeGatherSpeed = 2.0f;  // Base time in seconds for one employee
+	private float _secondsForIndividualEmployeeToGather = 2.0f;  // Base time in seconds for one employee
 	
 	private ResourceInfo _resourceInfo;
 	private float _employeeCost;
@@ -79,24 +81,41 @@ public partial class GatherLine : VBoxContainer
 			OnGatheringComplete();
 			return;
 		}
-		
 
-		_progress = (float)timeElapsed.TotalMilliseconds / (float)TimeToGather.TotalMilliseconds;
+		if (TimeToGather.TotalSeconds < 0.25)
+		{
+			_progress = 1.0f;
+		}
+		else
+		{
+			_progress = (float)timeElapsed.TotalMilliseconds / (float)TimeToGather.TotalMilliseconds;
+		}
+
 		_progressBar.Value = _progress;
 	}
 
 	private void ProcessEmployeeGathering(double delta)
 	{
 		var employeeCount = GameState.Instance.GetEmployeeCount(ResourceId);
-		if (employeeCount > 0)
+		if(employeeCount <= 0)
+			return;
+
+		_employeeProgress += (float)delta * employeeCount / _secondsForIndividualEmployeeToGather;
+
+		var collectiveEmployeeTotalTimeToGather = _secondsForIndividualEmployeeToGather / employeeCount;
+		if (collectiveEmployeeTotalTimeToGather <= 0.25)
 		{
-			_employeeProgress += (float)delta * employeeCount / _employeeGatherSpeed;
+			_employeeProgressBar.Value = 1.0f;
+		}
+		else
+		{
 			_employeeProgressBar.Value = _employeeProgress;
-			
-			if (_employeeProgress >= 1.0f)
-			{
-				OnEmployeeGatheringComplete();
-			}
+		}
+
+		
+		if (_employeeProgress >= 1.0f)
+		{
+			OnEmployeeGatheringComplete();
 		}
 	}
 

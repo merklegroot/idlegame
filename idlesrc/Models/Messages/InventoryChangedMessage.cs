@@ -1,6 +1,6 @@
 using System;
 
-namespace IdleGame.Models;
+namespace IdleGame.Models.Messages;
 
 public record InventoryChangedMessage(string ResourceId, int Quantity)
 {

@@ -1,16 +1,7 @@
-using System.Text.Json.Serialization;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
-namespace IdleGame;
-
-public class RecipeIngredient
-{
-	[JsonPropertyName("id")]
-	public string Id { get; set; }
-
-	[JsonPropertyName("quantity")]
-	public int Quantity { get; set; }
-}
+namespace IdleGame.Models;
 
 public class ResourceInfo
 {

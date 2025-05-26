@@ -1,5 +1,6 @@
 using Godot;
 using IdleGame.Models;
+using IdleGame.Models.Messages;
 
 namespace IdleGame;
 
@@ -46,6 +47,7 @@ public partial class InventoryLine : VBoxContainer
 		_icon.Texture = GD.Load<Texture2D>(_resourceInfo.Icon);
 		_nameLabel.Text = _resourceInfo.Name;
 		_priceLabel.Text = $"Sell Price: {_resourceInfo.SellPrice}g";
+		
 		UpdateDisplay();
 	}
 

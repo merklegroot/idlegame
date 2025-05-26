@@ -1,5 +1,6 @@
 using Godot;
 using System.Linq;
+using IdleGame.Models;
 
 namespace IdleGame;
 

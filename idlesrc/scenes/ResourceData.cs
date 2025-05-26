@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using IdleGame.Models;
 
 namespace IdleGame;
 

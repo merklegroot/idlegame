@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://bll6jn5cvrxsb"]
+[gd_scene load_steps=3 format=3 uid="uid://bll6jn5cvrxsb"]
 
 [ext_resource type="Script" path="res://scenes/Inventory/Inventory.cs" id="1_inventory"]
+[ext_resource type="PackedScene" path="res://scenes/Inventory/InventoryDetailPanel.tscn" id="2_detail_panel"]
 
 [node name="Inventory" type="Control"]
 layout_mode = 3
@@ -56,6 +57,5 @@ layout_mode = 2
 size_flags_horizontal = 0
 theme_override_constants/separation = 10
 
-[node name="Label" type="Label" parent="VBoxContainer/HSplitContainer/DetailsContainer"]
+[node name="InventoryDetailPanel" parent="VBoxContainer/HSplitContainer/DetailsContainer" instance=ExtResource("2_detail_panel")]
 layout_mode = 2
-text = "Inventory Item Details"

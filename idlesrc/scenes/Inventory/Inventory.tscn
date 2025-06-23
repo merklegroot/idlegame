@@ -36,6 +36,7 @@ vertical_alignment = 1
 [node name="HSplitContainer" type="HSplitContainer" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_constants/separation = 100
 split_offset = 200
 
 [node name="InventoryListSectionContainer" type="VBoxContainer" parent="VBoxContainer/HSplitContainer"]
@@ -43,8 +44,7 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="VBoxContainer/HSplitContainer/InventoryListSectionContainer"]
 layout_mode = 2
-text = "Inventory Items
-"
+text = "Inventory Items"
 
 [node name="InventoryListItemContainer" type="VBoxContainer" parent="VBoxContainer/HSplitContainer/InventoryListSectionContainer"]
 layout_mode = 2

@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://bll6jn5cvrxsb"]
+[gd_scene load_steps=4 format=3 uid="uid://bll6jn5cvrxsb"]
 
 [ext_resource type="Script" path="res://scenes/Inventory/Inventory.cs" id="1_inventory"]
+[ext_resource type="PackedScene" path="res://scenes/Inventory/InventoryListPanel.tscn" id="2_4n8m0"]
 [ext_resource type="PackedScene" path="res://scenes/Inventory/InventoryDetailPanel.tscn" id="2_detail_panel"]
 
 [node name="Inventory" type="Control"]
@@ -41,6 +42,7 @@ theme_override_constants/separation = 100
 split_offset = 200
 
 [node name="InventoryListSectionContainer" type="VBoxContainer" parent="VBoxContainer/HSplitContainer"]
+visible = false
 layout_mode = 2
 
 [node name="Label" type="Label" parent="VBoxContainer/HSplitContainer/InventoryListSectionContainer"]
@@ -51,6 +53,14 @@ text = "Inventory Items"
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_constants/separation = 10
+
+[node name="InventoryListContainer" type="VBoxContainer" parent="VBoxContainer/HSplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_constants/separation = 10
+
+[node name="InventoryListPanel" parent="VBoxContainer/HSplitContainer/InventoryListContainer" instance=ExtResource("2_4n8m0")]
+layout_mode = 2
 
 [node name="DetailsContainer" type="VBoxContainer" parent="VBoxContainer/HSplitContainer"]
 layout_mode = 2

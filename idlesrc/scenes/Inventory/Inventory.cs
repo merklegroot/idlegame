@@ -12,7 +12,7 @@ public partial class Inventory : Control
 	
 	public override void _Ready()
 	{
-		_resourceContainer = GetNode<VBoxContainer>("VBoxContainer/Resources");
+		_resourceContainer = GetNode<VBoxContainer>("VBoxContainer/HSplitContainer/InventoryListSectionContainer/InventoryListItemContainer");
 		var inventoryLinePath = "res://scenes/Inventory/InventoryLine.tscn";
 		var inventoryLineScene = GD.Load<PackedScene>(inventoryLinePath);
 

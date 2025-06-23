@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=2 format=3 uid="uid://bll6jn5cvrxsb"]
 
 [ext_resource type="Script" path="res://scenes/Inventory/Inventory.cs" id="1_inventory"]
 
@@ -33,6 +33,29 @@ text = "Inventory"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Resources" type="VBoxContainer" parent="VBoxContainer"]
+[node name="HSplitContainer" type="HSplitContainer" parent="VBoxContainer"]
 layout_mode = 2
-theme_override_constants/separation = 10 
+size_flags_vertical = 3
+split_offset = 200
+
+[node name="InventoryListSectionContainer" type="VBoxContainer" parent="VBoxContainer/HSplitContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/HSplitContainer/InventoryListSectionContainer"]
+layout_mode = 2
+text = "Inventory Items
+"
+
+[node name="InventoryListItemContainer" type="VBoxContainer" parent="VBoxContainer/HSplitContainer/InventoryListSectionContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_constants/separation = 10
+
+[node name="DetailsContainer" type="VBoxContainer" parent="VBoxContainer/HSplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="VBoxContainer/HSplitContainer/DetailsContainer"]
+layout_mode = 2
+text = "Inventory Item Details"

@@ -4,7 +4,7 @@ using IdleGame.Models.Messages;
 
 namespace IdleGame;
 
-public partial class InventoryLine : VBoxContainer
+public partial class InventoryListItem : VBoxContainer
 {
 	[Export]
 	public string ResourceId { get; set; } = null;

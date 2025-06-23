@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3]
 
-[ext_resource type="Script" path="res://scenes/Inventory/InventoryLine.cs" id="1_script"]
+[ext_resource type="Script" path="res://scenes/Inventory/InventoryListItem.cs" id="1_script"]
 
 [node name="InventoryLine" type="VBoxContainer"]
 theme_override_constants/separation = 5

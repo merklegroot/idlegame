@@ -8,6 +8,8 @@ public class GameEvent
 
     public static event Action<InventoryChangedMessage> InventoryChanged;
 
+    public static event Action<InventoryItemSelectedMessage> InventoryItemSelected;
+
     public static event Action<SellRequestMessage> SellRequested;
 
     public static event Action MoneyChanged;
@@ -20,6 +22,11 @@ public class GameEvent
     public static void FireInventoryChanged(InventoryChangedMessage request)
     {
         InventoryChanged?.Invoke(request);
+    }
+
+    public static void FireInventoryItemSelected(InventoryItemSelectedMessage request)
+    {
+        InventoryItemSelected?.Invoke(request);
     }
 
     public static void FireMoneyChanged()

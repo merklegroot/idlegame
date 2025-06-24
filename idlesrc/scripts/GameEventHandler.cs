@@ -10,12 +10,14 @@ public partial class GameEventHandler : Node
     public override void _Ready()
     {
         GameEvent.HireRequested += OnHireRequested;
+        GameEvent.InventoryItemSelected += OnInventoryItemSelected;
         GameEvent.SellRequested += OnSellRequested;
     }
 
     public override void _ExitTree()
     {
         GameEvent.HireRequested -= OnHireRequested;
+        GameEvent.InventoryItemSelected -= OnInventoryItemSelected;
         GameEvent.SellRequested -= OnSellRequested;
     }
 
@@ -35,6 +37,19 @@ public partial class GameEventHandler : Node
             GameState.Instance.AddEmployee(request.ResourceId);
             GD.Print($"Hired an employee for {resourceInfo.Name} gathering!");
         }
+    }
+
+    private void OnInventoryItemSelected(InventoryItemSelectedMessage request)
+    {
+        var resourceInfo = ResourceData.Instance.GetResourceById(request.ResourceId);
+        if (resourceInfo == null)
+        {
+            GD.PrintErr($"Failed to load resource info for {request.ResourceId}");
+            return;
+        }
+
+        GD.Print($"Selected inventory item: {resourceInfo.Name}");
+        // TODO: Update detail panel with selected item information
     }
 
     private void OnSellRequested(SellRequestMessage request)

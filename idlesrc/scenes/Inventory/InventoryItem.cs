@@ -9,26 +9,33 @@ public partial class InventoryItem : Button
 	[Export]
 	public string ResourceId { get; set; } = null;
 	
+	private TextureRect _icon;
 	private Label _label;
-
-	private ResourceInfo _resourceInfo;
 	
 	public override void _Ready()
 	{
-		if (string.IsNullOrEmpty(ResourceId))
-			return;
-
-		// Get reference to the label
-		_label = GetNode<Label>("Label");
-
-		// Get resource info
-		_resourceInfo = ResourceData.Instance.GetResourceById(ResourceId);
-		if (_resourceInfo == null)
+		// Get references to UI elements
+		_icon = GetNode<TextureRect>("HBoxContainer/Icon");
+		_label = GetNode<Label>("HBoxContainer/Label");
+		
+		// Update the display based on ResourceId
+		if (!string.IsNullOrEmpty(ResourceId))
 		{
-			GD.PrintErr($"Failed to load resource info for {ResourceId}");
-			return;
+			UpdateDisplay();
 		}
-
-		_label.Text = _resourceInfo.Name;
+	}
+	
+	private void UpdateDisplay()
+	{
+		var resourceInfo = ResourceData.Instance.GetResourceById(ResourceId);
+		if (resourceInfo != null)
+		{
+			_icon.Texture = GD.Load<Texture2D>(resourceInfo.Icon);
+			_label.Text = resourceInfo.Name;
+		}
+		else
+		{
+			_label.Text = ResourceId;
+		}
 	}
 } 

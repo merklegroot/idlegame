@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://bll6jn5cvrxsb"]
 
 [ext_resource type="Script" path="res://scenes/Inventory/Inventory.cs" id="1_inventory"]
-[ext_resource type="PackedScene" path="res://scenes/Inventory/InventoryListPanel.tscn" id="2_4n8m0"]
+[ext_resource type="PackedScene" uid="uid://5j3qyvuwq6cg" path="res://scenes/Inventory/InventoryListPanel.tscn" id="2_4n8m0"]
 [ext_resource type="PackedScene" path="res://scenes/Inventory/InventoryDetailPanel.tscn" id="2_detail_panel"]
 
 [node name="Inventory" type="Control"]
@@ -15,15 +15,11 @@ script = ExtResource("1_inventory")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -121.0
-offset_top = -42.0
-offset_right = 121.0
-offset_bottom = 42.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 50.0
+offset_right = -50.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 20
@@ -35,37 +31,15 @@ text = "Inventory"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HSplitContainer" type="HSplitContainer" parent="VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_constants/separation = 100
-split_offset = 200
+theme_override_constants/separation = 40
 
-[node name="InventoryListSectionContainer" type="VBoxContainer" parent="VBoxContainer/HSplitContainer"]
-visible = false
+[node name="InventoryListPanel" parent="VBoxContainer/HBoxContainer" instance=ExtResource("2_4n8m0")]
 layout_mode = 2
+size_flags_horizontal = 3
 
-[node name="Label" type="Label" parent="VBoxContainer/HSplitContainer/InventoryListSectionContainer"]
+[node name="InventoryDetailPanel" parent="VBoxContainer/HBoxContainer" instance=ExtResource("2_detail_panel")]
 layout_mode = 2
-text = "Inventory Items"
-
-[node name="InventoryListItemContainer" type="VBoxContainer" parent="VBoxContainer/HSplitContainer/InventoryListSectionContainer"]
-layout_mode = 2
-size_flags_horizontal = 0
-theme_override_constants/separation = 10
-
-[node name="InventoryListContainer" type="VBoxContainer" parent="VBoxContainer/HSplitContainer"]
-layout_mode = 2
-size_flags_horizontal = 0
-theme_override_constants/separation = 10
-
-[node name="InventoryListPanel" parent="VBoxContainer/HSplitContainer/InventoryListContainer" instance=ExtResource("2_4n8m0")]
-layout_mode = 2
-
-[node name="DetailsContainer" type="VBoxContainer" parent="VBoxContainer/HSplitContainer"]
-layout_mode = 2
-size_flags_horizontal = 0
-theme_override_constants/separation = 10
-
-[node name="InventoryDetailPanel" parent="VBoxContainer/HSplitContainer/DetailsContainer" instance=ExtResource("2_detail_panel")]
-layout_mode = 2
+size_flags_horizontal = 3

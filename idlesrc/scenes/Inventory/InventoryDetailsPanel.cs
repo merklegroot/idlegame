@@ -2,7 +2,7 @@ using Godot;
 
 namespace IdleGame;
 
-public partial class InventoryDetailPanel : Control
+public partial class InventoryDetailsPanel : Control
 {
     public override void _Ready()
     {

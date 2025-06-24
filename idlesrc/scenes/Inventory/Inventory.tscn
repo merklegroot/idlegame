@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/Inventory/Inventory.cs" id="1_inventory"]
 [ext_resource type="PackedScene" uid="uid://5j3qyvuwq6cg" path="res://scenes/Inventory/InventoryListPanel.tscn" id="2_4n8m0"]
-[ext_resource type="PackedScene" path="res://scenes/Inventory/InventoryDetailPanel.tscn" id="2_detail_panel"]
+[ext_resource type="PackedScene" uid="uid://bmwdklc2lp80" path="res://scenes/Inventory/InventoryDetailsPanel.tscn" id="2_detail_panel"]
 
 [node name="Inventory" type="Control"]
 layout_mode = 3
@@ -40,6 +40,6 @@ theme_override_constants/separation = 40
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="InventoryDetailPanel" parent="VBoxContainer/HBoxContainer" instance=ExtResource("2_detail_panel")]
+[node name="InventoryDetailsPanel" parent="VBoxContainer/HBoxContainer" instance=ExtResource("2_detail_panel")]
 layout_mode = 2
 size_flags_horizontal = 3

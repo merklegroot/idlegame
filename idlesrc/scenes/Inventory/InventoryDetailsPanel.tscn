@@ -1,8 +1,8 @@
 [gd_scene load_steps=2 format=3 uid="uid://bmwdklc2lp80"]
 
-[ext_resource type="Script" path="res://scenes/Inventory/InventoryDetailPanel.cs" id="1_script"]
+[ext_resource type="Script" path="res://scenes/Inventory/InventoryDetailsPanel.cs" id="1_script"]
 
-[node name="InventoryDetailPanel" type="Control"]
+[node name="InventoryDetailsPanel" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -32,3 +32,4 @@ theme_override_constants/separation = 10
 layout_mode = 2
 text = "Inventory Details Panel"
 horizontal_alignment = 1
+theme_override_font_sizes/font_size = 32

@@ -30,6 +30,37 @@ theme_override_constants/separation = 10
 
 [node name="Title" type="Label" parent="Panel/VBoxContainer"]
 layout_mode = 2
-text = "Inventory Details Panel"
+text = "Item Details"
 horizontal_alignment = 1
 theme_override_font_sizes/font_size = 32
+
+[node name="Icon" type="TextureRect" parent="Panel/VBoxContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Name" type="Label" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = "No item selected"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 24
+
+[node name="Description" type="Label" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = ""
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 16
+autowrap_mode = 2
+
+[node name="SellPrice" type="Label" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = ""
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 20
+
+[node name="Quantity" type="Label" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = ""
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 20

@@ -25,4 +25,9 @@ stretch_mode = 5
 layout_mode = 2
 size_flags_horizontal = 3
 text = "test"
+vertical_alignment = 1
+
+[node name="Quantity" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "0"
 vertical_alignment = 1 

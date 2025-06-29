@@ -1,77 +1,64 @@
 using Godot;
-using IdleGame.Models;
 using IdleGame.Models.Messages;
 
 namespace IdleGame;
 
-public partial class InventoryListItem : VBoxContainer
+public partial class InventoryListItem : Button
 {
 	[Export]
 	public string ResourceId { get; set; } = null;
 	
 	private TextureRect _icon;
-	private Label _nameLabel;
+	private Label _label;
 	private Label _quantityLabel;
-	private Label _priceLabel;
-	private Button _sellOneButton;
-	private Button _sellAllButton;
-	
-	private ResourceInfo _resourceInfo;
 	
 	public override void _Ready()
 	{
 		// Get references to UI elements
-		_icon = GetNode<TextureRect>("MainInfo/Icon");
-		_nameLabel = GetNode<Label>("MainInfo/Label");
-		_quantityLabel = GetNode<Label>("MainInfo/Quantity");
-		_priceLabel = GetNode<Label>("Price");
-		_sellOneButton = GetNode<Button>("ButtonContainer/SellOne");
-		_sellAllButton = GetNode<Button>("ButtonContainer/SellAll");
+		_icon = GetNode<TextureRect>("HBoxContainer/Icon");
+		_label = GetNode<Label>("HBoxContainer/Label");
+		_quantityLabel = GetNode<Label>("HBoxContainer/Quantity");
 		
-		// Get resource info
-		_resourceInfo = ResourceData.Instance.GetResourceById(ResourceId);
-		if (_resourceInfo == null)
+		// Connect button pressed signal
+		Pressed += OnPressed;
+		
+		// Update the display based on ResourceId
+		if (!string.IsNullOrEmpty(ResourceId))
 		{
-			GD.PrintErr($"Failed to load resource info for {ResourceId}");
-			return;
+			UpdateDisplay();
+			
+			// Connect to inventory changes
+			GameState.Instance.InventoryChanged += (id, qty) => UpdateQuantity();
 		}
-		
-		// Connect to inventory changes
-		GameState.Instance.InventoryChanged += (id, qty) => UpdateDisplay();
-		
-		// Connect button signals
-		_sellOneButton.Pressed += OnSellOnePressed;
-		_sellAllButton.Pressed += OnSellAllPressed;
-		
-		// Initialize UI
-		_icon.Texture = GD.Load<Texture2D>(_resourceInfo.Icon);
-		_nameLabel.Text = _resourceInfo.Name;
-		_priceLabel.Text = $"Sell Price: {_resourceInfo.SellPrice}g";
-		
-		UpdateDisplay();
 	}
-
+	
+	private void OnPressed()
+	{
+		GameEvent.FireInventoryItemSelected(new InventoryItemSelectedMessage(ResourceId));
+	}
+	
 	private void UpdateDisplay()
 	{
-		var quantity = GameState.Instance.GetResourceQuantity(ResourceId);
-		_quantityLabel.Text = quantity.ToString();
+		var resourceInfo = ResourceData.Instance.GetResourceById(ResourceId);
+		if (resourceInfo != null)
+		{
+			_icon.Texture = GD.Load<Texture2D>(resourceInfo.Icon);
+			_label.Text = resourceInfo.Name;
+		}
+		else
+		{
+			_label.Text = ResourceId;
+		}
 		
-		// Disable sell buttons if we don't have any of this resource
-		_sellOneButton.Disabled = quantity < 1;
-		_sellAllButton.Disabled = quantity < 1;
+		UpdateQuantity();
 	}
 	
-	private void OnSellOnePressed()
+	private void UpdateQuantity()
 	{
-		GameEvent.FireSellRequested(new SellRequestMessage(ResourceId, 1));
+		if (!string.IsNullOrEmpty(ResourceId))
+		{
+			var quantity = GameState.Instance.GetResourceQuantity(ResourceId);
+			_quantityLabel.Text = quantity.ToString();
+		}
 	}
-	
-	private void OnSellAllPressed()
-	{
-		var quantity = GameState.Instance.GetResourceQuantity(ResourceId);
-		if (quantity <= 0)
-			return;
-
-		GameEvent.FireSellRequested(new SellRequestMessage(ResourceId, quantity));
-	}
-}
+} 

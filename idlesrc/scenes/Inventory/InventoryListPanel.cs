@@ -8,14 +8,12 @@ namespace IdleGame;
 public partial class InventoryListPanel : Control
 {
     private VBoxContainer _resourceContainer;
-    // private List<InventoryListItem> _resourceLines = new();
-    private List<InventoryItem> _resourceLines = new();
+    private List<InventoryListItem> _resourceLines = new();
     
     public override void _Ready()
     {
         _resourceContainer = GetNode<VBoxContainer>("Panel/VBoxContainer");
-        // var inventoryLinePath = "res://scenes/Inventory/InventoryListItem.tscn";
-        var inventoryLinePath = "res://scenes/Inventory/InventoryItem.tscn";
+        var inventoryLinePath = "res://scenes/Inventory/InventoryListItem.tscn";
         var inventoryLineScene = GD.Load<PackedScene>(inventoryLinePath);
 
         // Clean up any existing lines
@@ -31,8 +29,7 @@ public partial class InventoryListPanel : Control
         // Create lines for each resource
         foreach (var resource in ResourceData.Instance.ListResources())
         {
-            // var line = inventoryLineScene.Instantiate<InventoryListItem>();
-            var line = inventoryLineScene.Instantiate<InventoryItem>();
+            var line = inventoryLineScene.Instantiate<InventoryListItem>();
             line.ResourceId = resource.Id;
             _resourceContainer.AddChild(line);
             _resourceLines.Add(line);

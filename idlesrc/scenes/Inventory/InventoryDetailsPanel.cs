@@ -32,6 +32,9 @@ public partial class InventoryDetailsPanel : Control
         
         GameEvent.InventoryItemSelected += OnInventoryItemSelected;
         GameState.Instance.InventoryChanged += (id, qty) => UpdateQuantity();
+
+        _sellOneButton.Visible = false;
+        _sellAllButton.Visible = false;
     }
     
     public override void _ExitTree()
@@ -42,6 +45,18 @@ public partial class InventoryDetailsPanel : Control
     private void OnInventoryItemSelected(InventoryItemSelectedMessage message)
     {
         _selectedResourceId = message.ResourceId;
+
+        if(string.IsNullOrWhiteSpace(_selectedResourceId))
+        {
+            _sellOneButton.Visible = false;
+            _sellAllButton.Visible = false;
+        }
+        else
+        {
+            _sellOneButton.Visible = true;
+            _sellAllButton.Visible = true;
+        }
+
         UpdateDisplay();
         GD.Print($"InventoryDetailsPanel - OnInventoryItemSelected: {message.ResourceId}");
     }

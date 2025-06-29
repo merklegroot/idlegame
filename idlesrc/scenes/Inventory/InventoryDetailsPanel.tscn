@@ -64,3 +64,19 @@ layout_mode = 2
 text = ""
 horizontal_alignment = 1
 theme_override_font_sizes/font_size = 20
+
+[node name="ButtonContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="SellOne" type="Button" parent="Panel/VBoxContainer/ButtonContainer"]
+custom_minimum_size = Vector2(100, 32)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Sell 1"
+
+[node name="SellAll" type="Button" parent="Panel/VBoxContainer/ButtonContainer"]
+custom_minimum_size = Vector2(100, 32)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Sell All"

@@ -12,7 +12,15 @@ public class GameEvent
 
     public static event Action<SellRequestMessage> SellRequested;
 
+    public static event Action<SellAllRequestMessage> SellAllRequested;
+
     public static event Action MoneyChanged;
+
+
+    public static void FireSellAllRequested(SellAllRequestMessage request)
+    {
+        SellAllRequested?.Invoke(request);
+    }
 
     public static void FireHireRequested(HireRequestMessage request)
     {

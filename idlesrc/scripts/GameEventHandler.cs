@@ -12,6 +12,7 @@ public partial class GameEventHandler : Node
         GameEvent.HireRequested += OnHireRequested;
         GameEvent.InventoryItemSelected += OnInventoryItemSelected;
         GameEvent.SellRequested += OnSellRequested;
+        GameEvent.SellAllRequested += OnSellAllRequested;
     }
 
     public override void _ExitTree()
@@ -19,6 +20,7 @@ public partial class GameEventHandler : Node
         GameEvent.HireRequested -= OnHireRequested;
         GameEvent.InventoryItemSelected -= OnInventoryItemSelected;
         GameEvent.SellRequested -= OnSellRequested;
+        GameEvent.SellAllRequested -= OnSellAllRequested;
     }
 
     private void OnHireRequested(HireRequestMessage request)
@@ -75,6 +77,31 @@ public partial class GameEventHandler : Node
         GameState.Instance.DeltaResourceQuantity(request.ResourceId, -effectiveQuantityToSell);
 
         // GameEvent.FireInventoryChanged(new InventoryChangedMessage(request.ResourceId, GameState.Instance.GetResourceQuantity(request.ResourceId)));
+        // GameEvent.FireMoneyChanged();
+    }    
+
+    private void OnSellAllRequested(SellAllRequestMessage request)
+    {
+        var resourceInfo = ResourceData.Instance.GetResourceById(request.ResourceId);
+        if (resourceInfo == null)
+        {
+            GD.PrintErr($"Failed to load resource info for {request.ResourceId}");
+            return;
+        }
+
+        var quantityOnHand = GameState.Instance.GetResourceQuantity(request.ResourceId);
+        if (quantityOnHand <= 0)
+        {
+            GD.PrintErr($"No {resourceInfo.Name} to sell");
+            return;
+        }
+
+        var totalValue = quantityOnHand * resourceInfo.SellPrice;
+
+        GameState.Instance.AddMoney(totalValue);
+        GameState.Instance.DeltaResourceQuantity(request.ResourceId, -quantityOnHand);
+
+        // GameEvent.FireInventoryChanged(new InventoryChangedMessage(request.ResourceId, 0));
         // GameEvent.FireMoneyChanged();
     }    
 }

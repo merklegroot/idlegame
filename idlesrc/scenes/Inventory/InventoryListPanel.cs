@@ -9,6 +9,8 @@ public partial class InventoryListPanel : Control
 {
     private VBoxContainer _resourceContainer;
     private List<InventoryListItem> _resourceLines = new();
+    private float _updateTimer = 0f;
+    private const float UPDATE_INTERVAL = 1.0f; // 1 second
 
     private const string inventoryLinePath = "res://scenes/Inventory/InventoryListItem.tscn";
 
@@ -30,6 +32,16 @@ public partial class InventoryListPanel : Control
         CleanupLines();
 
         GameEvent.InventoryChanged -= OnInventoryChanged;
+    }
+
+    public override void _Process(double delta)
+    {
+        _updateTimer += (float)delta;
+        if (_updateTimer >= UPDATE_INTERVAL)
+        {
+            _updateTimer = 0f;
+            UpdateDisplay();
+        }
     }
 
     private void OnInventoryChanged(InventoryChangedMessage request)

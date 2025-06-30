@@ -9,37 +9,37 @@ public partial class InventoryListPanel : Control
 {
     private VBoxContainer _resourceContainer;
     private List<InventoryListItem> _resourceLines = new();
+
+    private const string inventoryLinePath = "res://scenes/Inventory/InventoryListItem.tscn";
+
+    private PackedScene inventoryLineScene;
+
     
     public override void _Ready()
     {
-        _resourceContainer = GetNode<VBoxContainer>("Panel/VBoxContainer");
-        var inventoryLinePath = "res://scenes/Inventory/InventoryListItem.tscn";
-        var inventoryLineScene = GD.Load<PackedScene>(inventoryLinePath);
+        _resourceContainer = GetNode<VBoxContainer>("Panel/VBoxContainer");        
+        inventoryLineScene = GD.Load<PackedScene>(inventoryLinePath);
 
-        // Clean up any existing lines
-        foreach (var line in _resourceLines)
-        {
-            if (line != null && IsInstanceValid(line))
-            {
-                line.QueueFree();
-            }
-        }
-        _resourceLines.Clear();
-
-        // Create lines for each resource
-        foreach (var resource in ResourceData.Instance.ListResources())
-        {
-            var line = inventoryLineScene.Instantiate<InventoryListItem>();
-            line.ResourceId = resource.Id;
-            _resourceContainer.AddChild(line);
-            _resourceLines.Add(line);
-        }
+        UpdateDisplay();
 
         GameEvent.InventoryChanged += OnInventoryChanged;
     }
 
     public override void _ExitTree()
     {
+        CleanupLines();
+
+        GameEvent.InventoryChanged -= OnInventoryChanged;
+    }
+
+    private void OnInventoryChanged(InventoryChangedMessage request)
+    {
+        GD.Print($"InventoryListPanel: Inventory changed: {request.ResourceId} {request.Quantity}");
+        UpdateDisplay();        
+    }
+
+    private void CleanupLines()
+    {
         foreach (var line in _resourceLines)
         {
             if (line != null && IsInstanceValid(line))
@@ -47,11 +47,30 @@ public partial class InventoryListPanel : Control
                 line.QueueFree();
             }
         }
+
         _resourceLines.Clear();
     }
 
-    private void OnInventoryChanged(InventoryChangedMessage request)
+    private void AddLines()
     {
-        GD.Print($"InventoryListPanel: Inventory changed: {request.ResourceId} {request.Quantity}");
+        var resources = ResourceData.Instance.ListResources();
+
+        foreach (var resource in resources)
+        {
+            var quantity = GameState.Instance.GetResourceQuantity(resource.Id);
+            if (quantity <= 0)
+                continue;
+            
+            var line = inventoryLineScene.Instantiate<InventoryListItem>();
+            line.ResourceId = resource.Id;
+            _resourceContainer.AddChild(line);
+            _resourceLines.Add(line);
+        }
+    }
+
+    private void UpdateDisplay()
+    {
+        CleanupLines();
+        AddLines();
     }
 } 

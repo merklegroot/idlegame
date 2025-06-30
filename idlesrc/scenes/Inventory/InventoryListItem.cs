@@ -11,6 +11,7 @@ public partial class InventoryListItem : Button
 	private TextureRect _icon;
 	private Label _label;
 	private Label _quantityLabel;
+	private System.Action<string, int> _inventoryChangedHandler;
 	
 	public override void _Ready()
 	{
@@ -28,7 +29,18 @@ public partial class InventoryListItem : Button
 			UpdateDisplay();
 			
 			// Connect to inventory changes
-			GameState.Instance.InventoryChanged += (id, qty) => UpdateQuantity();
+			_inventoryChangedHandler = (id, qty) => UpdateQuantity();
+			GameState.Instance.InventoryChanged += _inventoryChangedHandler;
+		}
+	}
+	
+	public override void _ExitTree()
+	{
+		// Disconnect from inventory changes to prevent disposed object access
+		if (_inventoryChangedHandler != null)
+		{
+			GameState.Instance.InventoryChanged -= _inventoryChangedHandler;
+			_inventoryChangedHandler = null;
 		}
 	}
 	
